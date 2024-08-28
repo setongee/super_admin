@@ -1,0 +1,19 @@
+.iconPhoto{
+    width: 100px;
+    height: 100px;
+    background-color: rgb(224, 224, 224);
+    margin: 0 auto;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img{
+        width: 70%;
+        height: 70%;
+        border-radius: 50%;
+    }
+}

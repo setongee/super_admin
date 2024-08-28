@@ -1,0 +1,25 @@
+.table__heading_title{
+
+    a{
+        color: #000;
+
+        &:hover{
+            text-decoration: underline;
+            color: green;
+        }
+    }
+
+}
+
+.imagery{
+
+    width: 300px;
+
+}
+
+.reset{
+    right: 275px;
+    background-color: transparent !important;
+    color: #101010 !important;
+    border: 1px solid #cacaca;
+}

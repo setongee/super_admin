@@ -1,0 +1,225 @@
+.header__main{
+
+    margin-left: 330px;
+    width: calc(100% - 330px);
+    background-color: #fff;
+    padding: 25px 20px;
+    position: fixed;
+    z-index: 9;
+
+    .strip_lines{
+
+        display: flex;
+        z-index: 99999;
+        position: fixed;
+        left: 0;
+        top: 0%;
+        width: 100%;
+        display: none;
+    
+       .lineIn{
+        
+        width: 25%;
+        height: 5px;
+        background-color: #006240;
+    
+       }
+    
+       .lasg_red {
+        background-color: #E83B50;
+       } 
+    
+       .lasg_blue {
+        background-color: #4D8EFF;
+       } 
+    
+       .lasg_yellow {
+        background-color: #FFBB32;
+       } 
+    
+       .lasg_green {
+        background-color: #32C76D;
+       } 
+    
+    }
+
+    .header__top{
+
+        .lasg__logo{
+
+            align-items: center;
+            gap: 13px;
+
+            .image{
+                height: 47px;
+                width: 47px;
+                overflow: hidden;
+
+                img{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
+
+            .logo__name{
+
+                width: 200px;
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 19px;
+
+            }
+
+        }
+
+    }
+
+    .search__area{
+
+        width: 500px;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+
+        .search__field{
+
+            background-color: transparent;
+            outline: none;
+            border: none;
+            width: 100%;
+            padding: 20px 0;
+
+            &::placeholder{
+                font-size: 15px;
+            }
+
+        }
+
+    }
+
+    .aux{
+
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        .quick__header__info{
+
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            font-size: 13px;
+            
+        }
+
+        .hovMan{
+            padding: 0px;
+            position: absolute;
+            width: 350px;
+            right: 0px;
+            // translate: -50%;
+            display: none;
+            top: 15px;
+
+
+        }
+
+        .dropdown__open{
+            
+            background-color: #fff;
+            font-size: 14px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            border-radius: 20px;
+            padding-bottom: 35px;
+            color: #006240;
+            margin-top: 18px;
+            cursor: pointer;
+            box-shadow: 3px 1px 30px rgba($color: #000000, $alpha: .05);
+
+            .list__options{
+
+                display: flex;
+                flex-direction: column;
+                font-weight: 500;
+
+                span{
+                    font-size: 13px;
+                    margin-top: 4px;
+                    font-weight: 300;
+                    color: #777;
+                }
+
+            }
+
+            .baseMod{
+                padding-top: 20px;
+                border-top: 1px solid #eee;
+                margin-top: 0px;
+                color: crimson;
+            }
+
+        }
+
+        .account{
+
+            display: flex;
+            gap: 10px;
+            
+            .account__current{
+
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                cursor: pointer;
+
+                .account_bubble{
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 14px;
+                    background-color: #006240;
+                    color: #F2F8F5;
+                    font-weight: 600;
+                    letter-spacing: 1px;
+                    height: 45px;
+                    width: 45px;
+                    border-radius: 50%;
+                    font-size: 13px;
+
+                }
+
+                .name_agent{
+
+                    font-size: 14px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1px;
+                    margin-right: 5px;
+
+                    .agent{
+                        font-weight: 500;
+                    }
+
+                    .position{
+                        color: #777;
+                    }
+
+                }
+            }
+
+        }
+
+        &:hover .hovMan{
+
+            display: block;
+
+        }
+
+    }
+}

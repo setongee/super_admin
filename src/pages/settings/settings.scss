@@ -1,0 +1,217 @@
+.settings__menu{
+
+    display: flex;
+    border-radius: 10px;
+    border: 1px solid #f9f9f9;
+    background-color: #fff;
+    width: 250px;
+    overflow: hidden;
+    padding: 5px;
+    margin: 0 auto;
+
+    .tab__section{
+        
+        font-size: 14px;
+        width: 50%;
+        text-align: center;
+        padding: 10px 0;
+        cursor: pointer;
+        color: #999;
+
+        &.current{
+            color: #fff;
+            background-color: green;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+    }
+
+}
+
+.settings__section{
+
+    width: 750px;
+    background-color: #fff;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 30px;
+    border-radius: 10px;
+
+}
+
+.section__title{
+    font-size: 11px;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+form{
+
+    margin-top: 30px;
+    font-size: 14px;
+
+    .formInputs{
+
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 18px;
+        gap: 10px;
+
+        &:last-child{
+            margin-bottom: 10px;
+        }
+        
+        label{
+            font-size: 13px;
+            font-weight: 500;
+        }
+    }
+
+    .--formfix{
+
+        flex-direction: row;
+        justify-content: space-between;
+
+        div{
+            display: flex;
+            flex-direction: column;
+            width: calc(50% - 10px);
+            gap: 5px;
+        }
+    }
+
+    input, select{
+        outline: none;
+        padding: 13px 10px;
+        border-radius: 5px;
+        border: 1px solid #dddcdc;
+    }
+
+}
+
+.top_20{
+    margin-top: 40px !important;
+}
+
+.button_auth{
+    font-size: 13px;
+    background-color: #eee;
+    padding: 12px;
+    width: max-content;
+    border-radius: 5px;
+    font-weight: 500;
+    border: 1px solid #d6d6d6;
+    cursor: pointer;
+}
+
+.green{
+    background-color: rgb(0, 201, 0);
+    color: #fff;
+    font-weight: 600;
+    padding-left: 20px;
+    padding-right: 20px;
+    gap: 5px;
+}
+
+.changePassword{
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.modalAdmin{
+
+    height: 100vh;
+    width: 100%;
+    background-color: rgba($color: #000000, $alpha: .4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .modal__container{
+
+        width: 500px;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+    }
+
+    .submit{
+        background-color: green;
+        color: #fff;
+        width: 100%;
+        text-align: center;
+    }
+
+}
+
+.line_dw{
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 20px;
+}
+
+.close{
+    cursor: pointer;
+}
+
+
+//team member port
+
+.settings__holder{
+
+    background-color: #fff;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 90%;
+    border-radius: 10px;
+    padding: 30px;
+
+}
+
+.table__area__settings__team{
+
+    font-size: 13px;
+
+    .tableHeaders__team{
+
+        font-weight: 600;
+        font-size: 13px;
+        color: #777;
+        margin-top: 40px;
+        margin-bottom: 15px;
+
+        .team__table__th{
+
+            width: 18%;
+
+            &:last-child{
+                width: 10%;
+            }
+
+        }
+    }
+
+    .tableBody__team{
+        cursor: pointer;
+    }
+    
+    .team__table__td{
+
+        width: 18%;
+        border-top: 1px solid #eee;
+        padding: 18px 0;
+
+        &:last-child{
+            width: 10%;
+            color: crimson;
+        }
+
+    }
+
+}
