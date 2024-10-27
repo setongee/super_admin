@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes, redirect } from 'react-router-dom'
+import { Route, Routes, redirect, useLocation } from 'react-router-dom'
 import Dashboard from './pages/dashboard/Dashboard'
 import Mda from './pages/mda/mda'
 import Services from './pages/services/services'
@@ -8,6 +8,7 @@ import Newsroom from './pages/newsroom/newsroom'
 import Executive from './pages/executive/executive'
 import Subscribers from './pages/subscribers/subscribers'
 import Settings from './pages/settings/settings'
+import { decodeURL } from './middleware/middleware'
 
 export default function RouterClass() {
 

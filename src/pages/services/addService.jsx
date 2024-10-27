@@ -9,9 +9,10 @@ import LASGEditor from '../../components/textEditor/lasg_custom_editor';
 
 export default function AddService({setNew, close, category}) {
 
-    const [data, setData] = useState({name : '', content : '', tags : [], url : '', cta : '', short : '', isOffline : false });
+    const [data, setData] = useState({name : '', content : '', keywords : [], tags : [], url : '', cta : '', short : '', isOffline : false });
     const [addtagModal, setaddtagModal] = useState(false)
     const [tags, setTags] = useState([]);
+    const [keyw, setKeyw] = useState("");
     const [search, setSearch] = useState("");
     const [queryResults, setQueryResults] = useState(category);
 
@@ -132,7 +133,7 @@ export default function AddService({setNew, close, category}) {
 
     const handleSubmit = async () => {
 
-        if(data.name === '' || data.content === '' || !data.categories.length  || data.url === '' || data.cta === '' || data.short === '' ) {
+        if(data.name === '' || data.content === '' || !data.categories.length || !data.keywords.length  || data.url === '' || data.cta === '' || data.short === '' ) {
 
             alert("All fields are required before adding. Try again!")
 
@@ -151,6 +152,24 @@ export default function AddService({setNew, close, category}) {
             }
 
         }
+
+    }
+
+
+    const refineKeywords = (e) => {
+
+        const val = e.target.value
+        setKeyw(val);
+
+        const trans = val.split(",")
+
+        const ready = trans.map(res => {
+            return {
+                key : res.trim()
+            }
+        })
+
+        setData({...data, keywords : ready})
 
     }
 
@@ -191,6 +210,16 @@ export default function AddService({setNew, close, category}) {
 
                     </div>
 
+                    {/*Keywords */}
+                    
+                    <div className="form__holder">
+
+                        <label> Keywords (Use comma (,) to seperate keywords) </label>
+                        <input type="text" name = 'key' value = { keyw } placeholder='Enter here...' onChange={refineKeywords} />
+
+                    </div>
+
+                    
                     {/* Tags */}
 
                     <div className="form__holder">

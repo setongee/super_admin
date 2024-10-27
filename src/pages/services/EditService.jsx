@@ -13,6 +13,10 @@ export default function EditService({setNew, close, category, inData}) {
     const [data, setData] = useState(inData);
     const [addtagModal, setaddtagModal] = useState(false)
     const [tags, setTags] = useState(inData.categories);
+    const [keyw, setKeyw] = useState(() => {
+        const keyholder = inData.keywords.map( k => k.key ).join(', ');
+        return keyholder;
+    });
     const [search, setSearch] = useState("");
     const [queryResults, setQueryResults] = useState(category);
 
@@ -133,7 +137,7 @@ export default function EditService({setNew, close, category, inData}) {
 
     const handleSubmit = async () => {
 
-        if(data.name === '' || data.content === '' || !data.categories.length  || data.url === '' || data.cta === '' || data.short === '' ) {
+        if(data.name === '' || data.content === '' || !data.categories.length || !data.keywords.length || data.url === '' || data.cta === '' || data.short === '' ) {
 
             alert("All fields are required before adding. Try again!")
 
@@ -153,6 +157,23 @@ export default function EditService({setNew, close, category, inData}) {
             } )
 
         }
+
+    }
+
+    const refineKeywords = (e) => {
+
+        const val = e.target.value
+        setKeyw(val);
+
+        const trans = val.split(",")
+
+        const ready = trans.map(res => {
+            return {
+                key : res.trim()
+            }
+        })
+
+        setData({...data, keywords : ready})
 
     }
 
@@ -190,6 +211,15 @@ export default function EditService({setNew, close, category, inData}) {
 
                         <label> Short description of service (max 100 characters) </label>
                         <input type="text" name = 'short' value = {data.short} placeholder='Enter here...' onChange={(handleChange)} maxLength="100" />
+
+                    </div>
+
+                     {/*Keywords */}
+                    
+                    <div className="form__holder">
+
+                        <label> Keywords (Use comma (,) to seperate keywords) </label>
+                        <input type="text" name = 'key' value = { keyw } placeholder='Enter here...' onChange={refineKeywords} />
 
                     </div>
 

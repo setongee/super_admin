@@ -17,3 +17,10 @@ export const formatDate2 = (date) => {
     return format(new Date(date), "dd-MM-yyyy");
     
 }
+
+export const decodeURL = (url) => {
+
+    const newURL = decodeURI(url);
+    return newURL;
+
+}
