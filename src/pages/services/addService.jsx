@@ -140,7 +140,7 @@ export default function AddService({setNew, close, category}) {
 
         } else {
 
-            const response = await axios.post('http://localhost:8000/api/v2/services/add/single', data);
+            const response = await axios.post('https://oyster-app-7x7p7.ondigitalocean.app/api/v2/services/add/single', data);
         
             if (response.status === 200){
 
