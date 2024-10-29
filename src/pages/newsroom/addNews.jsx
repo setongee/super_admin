@@ -10,7 +10,7 @@ import { formatCategoryName } from '../../middleware/middleware';
 
 export default function AddNews({setNew, close, category}) {
 
-    const [data, setData] = useState({title : '', content : '', categories : [], date : '' });
+    const [data, setData] = useState({title : '', content : '', categories : [], date : '', mda : '' });
     const [addtagModal, setaddtagModal] = useState(false)
     const [tags, setTags] = useState([]);
     const [search, setSearch] = useState("");
@@ -18,6 +18,8 @@ export default function AddNews({setNew, close, category}) {
 
     const [file, setFile] = useState([]);
     const [photo, setPhoto] = useState('');
+
+    console.log(data)
 
     const getText = (text) => {
 
@@ -53,7 +55,7 @@ export default function AddNews({setNew, close, category}) {
             setQueryResults(category);
           }
           else{
-            const queriedRes =  results.filter( item => item.score < 0.1 ).map(res => res.item);
+            const queriedRes =  results.filter( item => item.score < 0.5 ).map(res => res.item);
            
             setQueryResults(queriedRes);
 
@@ -263,6 +265,19 @@ export default function AddNews({setNew, close, category}) {
 
                     </div>
 
+                    {/* MDA */}
+
+                    <div className="form__holder">
+
+                        <label> Targeted MDA </label>
+                        <select name="mda" placeholder='Enter here...' onChange={(handleChange)} value={data.mda}>
+                            <option value='mow' >Ministry of Work</option>
+                            <option value='moh' >Ministry of Health</option>
+                            <option value='mof' >Ministry of Finance</option>
+                        </select>
+
+                    </div>
+
 
                     {/* Tags */}
 
@@ -316,7 +331,7 @@ export default function AddNews({setNew, close, category}) {
 
                 </div>
 
-                <div className="editor edit_news">
+                <div className="editor edit_news ER">
 
                     <LASGEditor value = {'<p>Start typing your text here...</p>'} readOnly = {false} submittableText = {getText} />
 

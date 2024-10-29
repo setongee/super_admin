@@ -1,6 +1,6 @@
 .news__image{
     background-color: #eee;
-    width: 670px;
+    width: 100%;
     height: 320px;
     position: relative;
     cursor: pointer;
@@ -16,7 +16,13 @@
 
 .form__long{
     overflow-y: auto;
+    scrollbar-width: none;
     height: 700px;
+    width: 54% !important;
+}
+
+.ER{
+    width: 45% !important;
 }
 
 .tapTo{

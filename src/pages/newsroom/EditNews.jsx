@@ -16,6 +16,8 @@ export default function EditNews({setNew, close, category, inData}) {
     const [search, setSearch] = useState("");
     const [queryResults, setQueryResults] = useState(category);
 
+    console.log(data)
+
     const [file, setFile] = useState([]);
 
     const getText = (text) => {
@@ -286,6 +288,19 @@ export default function EditNews({setNew, close, category, inData}) {
 
                         <label> Date created </label>
                         <DateSelector date__add = {handleDateChange} dateF = {data.date} />
+
+                    </div>
+
+                    {/* MDA */}
+
+                    <div className="form__holder">
+
+                        <label> Targeted MDA </label>
+                        <select name="mda" placeholder='Enter here...' onChange={(handleChange)} value={data.mda} >
+                            <option value='mow' >Ministry of Work</option>
+                            <option value='moh' >Ministry of Health</option>
+                            <option value='mof' >Ministry of Finance</option>
+                        </select>
 
                     </div>
 
