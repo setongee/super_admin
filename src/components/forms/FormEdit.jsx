@@ -32,7 +32,7 @@ export default function FormEdit({close, setNew, dataOnload}) {
 
   const handleSubmit = async () => {
 
-    if(data.type === '' || data.name === '' || data.subdomain === '' || data.agent_name === '' || data.email === '') {
+    if(data.type === '' || data.name === '' || data.subdomain === '' || data.description === '' || data.agent_name === '' || data.email === '') {
 
         alert("All fields are required before adding. Try again!")
 
@@ -84,6 +84,15 @@ export default function FormEdit({close, setNew, dataOnload}) {
                         <option value='agency'>Agency</option>
 
                     </select>
+
+                </div>
+
+                {/* Description */}
+
+                <div className="form__holder">
+
+                    <label> Description </label>
+                    <input type="text" name = 'description' value = {data.description} placeholder='Enter here...' onChange={(handleChange)} />
 
                 </div>
 
