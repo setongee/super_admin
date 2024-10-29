@@ -32,7 +32,7 @@ export default function FormEdit({close, setNew, dataOnload}) {
 
   const handleSubmit = async () => {
 
-    if(data.type === '' || data.name === '' || data.subdomain === '' || data.description === '' || data.agent_name === '' || data.email === '') {
+    if(data.type === '' || data.name === '' || data.subdomain === '' || data.description === '' || data.agent_name === '' || data.email === '' || data.phone === '' || data.address === '') {
 
         alert("All fields are required before adding. Try again!")
 
@@ -108,12 +108,30 @@ export default function FormEdit({close, setNew, dataOnload}) {
 
                 </div>
 
-                {/* Agent_name */}
+                {/* MDA Email */}
                 
                 <div className="form__holder">
 
-                    <label> Agent Fullname </label>
-                    <input type="text" name = 'agent_name' value = {data.agent_name} placeholder='Enter here...' onChange={(handleChange)} />
+                    <label> MDA Email </label>
+                    <input type="text" name = 'email' value = {data.email} placeholder='Enter here...' onChange={(handleChange)} />
+
+                </div>
+
+                {/* MDA Phone */}
+                
+                <div className="form__holder">
+
+                    <label> MDA Phone </label>
+                    <input type="text" name = 'phone' value = {data.phone} placeholder='Enter here...' onChange={(handleChange)} />
+
+                </div>
+
+                {/* MDA Address */}
+                
+                <div className="form__holder">
+
+                    <label> MDA Address </label>
+                    <input type="text" name = 'address' value = {data.address} placeholder='Enter here...' onChange={(handleChange)} />
 
                 </div>
 
@@ -121,8 +139,8 @@ export default function FormEdit({close, setNew, dataOnload}) {
                 
                 <div className="form__holder">
 
-                    <label> Agent email </label>
-                    <input type="text" name = 'email' value = {data.email} placeholder='Enter here...' onChange={(handleChange)} />
+                    <label> Agent Fullname </label>
+                    <input type="text" name = 'agent_name' value = {data.agent_name} placeholder='Enter here...' onChange={(handleChange)} />
 
                 </div>
 
