@@ -7,6 +7,7 @@ import LASGEditor from '../../components/textEditor/lasg_custom_editor';
 import DateSelector from '../../components/date/dataSelector';
 import { addNews } from '../../api/news.req';
 import { formatCategoryName } from '../../middleware/middleware';
+import { getAllMdas } from '../../api/mda.req';
 
 export default function AddNews({setNew, close, category}) {
 
@@ -15,11 +16,10 @@ export default function AddNews({setNew, close, category}) {
     const [tags, setTags] = useState([]);
     const [search, setSearch] = useState("");
     const [queryResults, setQueryResults] = useState(category);
+    const [mdas, setMdas] = useState([]);
 
     const [file, setFile] = useState([]);
     const [photo, setPhoto] = useState('');
-
-    console.log(data)
 
     const getText = (text) => {
 
@@ -60,6 +60,9 @@ export default function AddNews({setNew, close, category}) {
             setQueryResults(queriedRes);
 
           }
+
+          getAllMdas()
+          .then(response => setMdas(response) );
 
     }, [search]);
 
@@ -270,11 +273,21 @@ export default function AddNews({setNew, close, category}) {
                     <div className="form__holder">
 
                         <label> Targeted MDA </label>
+
                         <select name="mda" placeholder='Enter here...' onChange={(handleChange)} value={data.mda}>
-                            <option value='mow' >Ministry of Work</option>
-                            <option value='moh' >Ministry of Health</option>
-                            <option value='mof' >Ministry of Finance</option>
+
+                            <option value="">--- Select a targeted MDA ---</option>
+
+                            {
+                                mdas.map( (res, index) => {
+
+                                    return <option value={res.name}>{res.name}</option>
+
+                                } )
+                            }
+
                         </select>
+                        
 
                     </div>
 
