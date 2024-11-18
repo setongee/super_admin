@@ -110,16 +110,15 @@ export default function EditService({setNew, close, category, inData}) {
         
     }
 
-    const removeTag = (tagName, formattedName) => {
+    const removeTag = (tagName) => {
 
         const newTagArr = tags.filter( e => e !== tagName );
-        const newTagArrFormat = formatTags.filter( e => e !== formattedName );
+        const findOne = queryResults.filter( e => e.name === tagName );
+        const newTagArrFormat = formatTags.filter( e => e !== findOne[0].formattedName);
         
         setTags(newTagArr); 
         setFormatTags(newTagArrFormat);
-
     }
-
     
     const handleChange = (e) => {
 
@@ -183,8 +182,6 @@ export default function EditService({setNew, close, category, inData}) {
         setData({...data, keywords : ready})
 
     }
-
-    console.log(data)
 
   return (
     
@@ -266,7 +263,7 @@ export default function EditService({setNew, close, category, inData}) {
                                     <div className="checkboxes">
 
                                         {
-                                            queryResults.length ? queryResults.map( data => <Services__category key = {data._id} name = {data.name} format = {data.formattedName} tags = {addTag} tagsZone = {tags} /> ) : <p>Nothing Found</p>
+                                            queryResults.length ? queryResults.map( data => <Services__category key = {data._id} name = {data.name} format = {data.formattedName} tags = {addTag} tagsZone = {tags} data = {data} /> ) : <p>Nothing Found</p>
                                         }
 
                                     </div>
