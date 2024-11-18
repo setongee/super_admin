@@ -8,7 +8,7 @@ import { deleteNews } from '../../api/news.req';
 import { truncateText } from '../../components/truncateText.jsx/truncateText';
 
 
-export default function NewsTableData({data, setNew, handleEdit}) {
+export default function NewsTableData({data, setNew, handleEdit, index}) {
 
   const [showMore, setShowMore] = useState(false);
   const [truncatedText, setTruncatedText] = useState('');
@@ -58,6 +58,8 @@ export default function NewsTableData({data, setNew, handleEdit}) {
     <div className="table__data body__area">
 
         <div className="table__heading_title flex__column">
+
+            <div className="number"> {index + 1}. </div>
 
             <div className="logo newsImageHere"> <img src={data.photo} alt="news photo" /> </div>
 

@@ -4,7 +4,7 @@ import '../../components/table/table.scss'
 import axios from 'axios'
 import CategoryTableData from './CategoryTableData'
 
-export default function Table({open, table__data, setNew, handleEdit}) {
+export default function Table({open, table__data, setNew, handleEdit, loading}) {
 
     // const [table__data, setTableData] = useState();
       
@@ -57,7 +57,7 @@ export default function Table({open, table__data, setNew, handleEdit}) {
 
                     return <CategoryTableData data = {res} key = {index} setNew = {setNew} handleEdit = {handleEdit} />
 
-                } ) : <p className='empty'> Sorry no news created yet! </p>
+                } ) : <p className='empty'> Sorry no Category has been created yet! </p>
             }
 
         </div>

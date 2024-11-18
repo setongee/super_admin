@@ -58,7 +58,7 @@ export default function TableComponent({open, table__data, setNew, handleEdit}) 
 
                     return <TableDataComponent data = {res} key = {index} setNew = {setNew} handleEdit = {handleEdit} />
 
-                } ) : <p className='empty'> Sorry no news created yet! </p>
+                } ) : <p className='empty'> Sorry no MDA has been created yet! </p>
             }
 
         </div>

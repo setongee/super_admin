@@ -14,6 +14,7 @@ import './executive.scss'
 import AddCouncilMember from './addExecutive'
 import { getAllMembers, getSingleMember } from '../../api/executives.req'
 import EditCouncilMember from './editExecutiveMember'
+import Loader from '../../components/loader/loader'
 
 export default function ExecutiveCouncil() {
 
@@ -22,10 +23,22 @@ export default function ExecutiveCouncil() {
   const [executiveMember, setExecutiveMember] = useState([]);
   const [newData, setNewData] = useState([]);
   const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
 
-    getAllMembers().then( e => setNews(e.data) );
+    setLoading(true);
+
+    getAllMembers().then( e => {
+      
+      setTimeout(() => {
+
+        setNews(e.data)
+        setLoading(false)
+        
+      }, 0);
+    
+    } );
     
   }, [newData]);
 
@@ -69,7 +82,8 @@ export default function ExecutiveCouncil() {
         { openEditModal ? <EditCouncilMember setNew = {setNewData} close = {closeEditModal} inData = {executiveMember} /> : null }
 
         <UIHolder>
-            
+
+            { loading ? <Loader/> : null }
             <ExecutiveTable open = {addService} table__data = {news} setNew = {setNewData} handleEdit = {editItem} />
 
         </UIHolder>

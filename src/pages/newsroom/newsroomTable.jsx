@@ -5,7 +5,8 @@ import ServiceTableData from './newsTableData'
 import axios from 'axios'
 import NewsTableData from './newsTableData'
 
-export default function NewsroomTable( { open, table__data, setNew, handleEdit } ) {
+export default function 
+NewsroomTable( { open, table__data, setNew, handleEdit, size, loading } ) {
       
   return (
 
@@ -15,7 +16,7 @@ export default function NewsroomTable( { open, table__data, setNew, handleEdit }
        
         <div className="table__actions__area flex flex_align_center flex_justify_space_between">
 
-            <div className="table__title thick"> Newsroom ({table__data.length}) </div>
+            <div className="table__title thick"> Newsroom ({size}) </div>
             
             <div className="table__actions flex flex_align_center">
 
@@ -51,13 +52,15 @@ export default function NewsroomTable( { open, table__data, setNew, handleEdit }
 
             </div>
 
+            <div className="txtpo">
             {
                 table__data.length ? table__data.map( (res, index) => {
 
-                    return <NewsTableData data = {res} key = {index} setNew = {setNew} handleEdit = {handleEdit} />
+                    return <NewsTableData data = {res} key = {index} setNew = {setNew} handleEdit = {handleEdit} index = {index} />
 
                 } ) : <p className='empty'> Sorry no news created yet! </p>
             }
+            </div>
 
         </div>
 

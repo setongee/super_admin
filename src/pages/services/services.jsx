@@ -8,6 +8,7 @@ import AddService from './addService'
 import { getServices, getSingleService } from '../../api/services.req'
 import EditService from './EditService'
 import { getAllCategory } from '../../api/category.req'
+import Loader from '../../components/loader/loader'
 
 export default function Services() {
 
@@ -17,11 +18,19 @@ export default function Services() {
   const [newData, setNewData] = useState([]);
   const [category, setCategory] = useState([]);
   const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
 
+    setLoading(true);
+
     getAllCategory().then( e => setCategory(e.data) );
-    getServices().then( e => setServices(e.data) );
+    getServices().then( e => {
+
+      setServices(e.data)
+      setLoading(false)
+      
+    } );
     
   }, [newData]);
 
@@ -63,8 +72,9 @@ export default function Services() {
         { openEditServiceModal ? <EditService setNew = {setNewData} category = {category} close = {closeEdeitServiceModal} inData = {singleService} /> : null }
 
         <UIHolder>
-            
-            <ServiceTable open = {addService} table__data = {services} setNew = {setNewData} handleEdit = {editService} />
+
+            { loading ? <Loader/> : null }
+            <ServiceTable open = {addService} table__data = {services} setNew = {setNewData} handleEdit = {editService} loading = {loading} />
 
         </UIHolder>
 

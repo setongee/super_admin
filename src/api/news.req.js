@@ -15,9 +15,11 @@ export const addNews = async (data) => {
 
 }
 
-export const getAllNews = async () => {
+export const getAllNews = async (topic, page) => {
 
-    const response = await axios.get(`${base_url}/get/all`);
+    let pageInt = Number(page) - 1
+
+    const response = await axios.get(`${base_url}/get/all/${topic}/${pageInt < 0 ? 0 : pageInt}`);
     
     if(response.status === 200) {
         return response.data;

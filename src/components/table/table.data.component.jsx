@@ -63,7 +63,7 @@ export default function TableDataComponent({data, setNew, handleEdit}) {
 
             <div className="mda__name">
                 <div className='main'>{data.name}</div>
-                <div className='sub lowercase'> {data.subdomain}.lagosstate.gov.ng</div>
+                <div className='sub lowercase'> { data.subdomain.split('.').length > 1 ? data.subdomain : data.subdomain + ".lagosstate.gov.ng" }</div>
             </div>
 
         </div>
@@ -83,7 +83,7 @@ export default function TableDataComponent({data, setNew, handleEdit}) {
 
               <div className="more" id = 'more'>
 
-                <p onClick={() => window.open( `https://${data.subdomain}.lagosstate.gov.ng` ) }> Visit MDA Site </p>
+                <p onClick={() => window.open( data.subdomain.split('.').length > 1 ? `https://${data.subdomain}` : `https://${data.subdomain}.lagosstate.gov.ng` ) }> Visit MDA Site </p>
                 <p onClick={() => handleEdit(data._id)}>Edit MDA Details</p>
                 <p>Reset Agent Password</p>
                 <p>Revoke Agent Access</p>

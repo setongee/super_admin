@@ -58,7 +58,7 @@ export default function ServiceTable({open, table__data, setNew, handleEdit}) {
 
                     return <ServiceTableData data = {res} key = {index} setNew = {setNew} handleEdit = {handleEdit} />
 
-                } ) : <p className='empty'> Sorry no news created yet! </p>
+                } ) : <p className='empty'> Sorry no Services created yet! </p>
             }
 
         </div>

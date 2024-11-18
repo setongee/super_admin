@@ -9,9 +9,10 @@ import LASGEditor from '../../components/textEditor/lasg_custom_editor';
 
 export default function AddService({setNew, close, category}) {
 
-    const [data, setData] = useState({name : '', content : '', keywords : [], tags : [], url : '', cta : '', short : '', isOffline : false });
+    const [data, setData] = useState({name : '', content : '', keywords : [], tags : [], url : '', cta : '', short : '', isOffline : false, formattedName : [] });
     const [addtagModal, setaddtagModal] = useState(false)
     const [tags, setTags] = useState([]);
+    const [formatTags, setFormatTags] = useState([]);
     const [keyw, setKeyw] = useState("");
     const [search, setSearch] = useState("");
     const [queryResults, setQueryResults] = useState(category);
@@ -78,20 +79,21 @@ export default function AddService({setNew, close, category}) {
 
             return {
                 ...e,
-                "categories" : tags
+                "categories" : tags,
+                "formattedName" : formatTags
             }
         }) 
 
     }, [tags]);
 
-    const addTag = (e, tagName) => {
+    const addTag = (e, tagName, formattedName) => {
 
         let checked = e.target.checked;
 
         if(checked) {
 
             setTags([...tags, tagName]);
-            
+            setFormatTags([...formatTags, formattedName]);
             
         }
 
@@ -103,10 +105,13 @@ export default function AddService({setNew, close, category}) {
         
     }
 
-    const removeTag = (tagName) => {
+    const removeTag = (tagName, formattedName) => {
 
         const newTagArr = tags.filter( e => e !== tagName );
+        const newTagArrFormat = formatTags.filter( e => e !== formattedName );
+        
         setTags(newTagArr); 
+        setFormatTags(newTagArrFormat);
 
     }
 
@@ -254,7 +259,7 @@ export default function AddService({setNew, close, category}) {
                                     <div className="checkboxes">
 
                                         {
-                                            queryResults.length ? queryResults.map( data => <Services__category key = {data._id} name = {data.name} tags = {addTag} tagsZone = {tags} /> ) : <p>Nothing Found</p>
+                                            queryResults.length ? queryResults.map( data => <Services__category key = {data._id} name = {data.name} format = {data.formattedName} tags = {addTag} tagsZone = {tags} /> ) : <p>Nothing Found</p>
                                         }
 
                                     </div>

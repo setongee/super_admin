@@ -8,6 +8,10 @@ import { getAllNews, getSingleNews } from '../../api/news.req'
 import NewsroomTable from './newsroomTable'
 import EditNews from './EditNews'
 import { getAllCategory } from '../../api/category.req'
+import { useParams } from 'react-router-dom'
+import { NavArrowLeft, NavArrowRight } from 'iconoir-react'
+import Pagination from '../../components/pagination/pagination'
+import Loader from '../../components/loader/loader'
 
 export default function Newsroom() {
 
@@ -17,14 +21,38 @@ export default function Newsroom() {
   const [newData, setNewData] = useState([]);
   const [category, setCategory] = useState([]);
   const [news, setNews] = useState([]);
-
+  const [size, setSize] = useState( { length : 0, pageCount : 0 } );
+  const [loading, setLoading] = useState(false);
+  
+  const {topic, page} = useParams();
+  
+  
   useEffect(() => {
 
-    getAllCategory().then( e => setCategory(e.data) );
-    getAllNews().then( e => setNews(e.data) );
+    setLoading(true);
     
-  }, [newData]);
+    getAllCategory().then( e => setCategory(e.data) );
+    
+    getAllNews(topic, page).then( e => { 
 
+      setTimeout(() => {
+
+        setNews(e.data);
+        
+        setSize({
+          length : e.length,
+          pageCount : parseInt(e.length / 20) + 1
+        });
+
+        setLoading(false)
+        
+      }, 500);
+
+     } );
+    
+  }, [newData, topic, page]);
+
+  
   const addService = () =>{
 
     setOpenModal(true);
@@ -63,8 +91,12 @@ export default function Newsroom() {
         { openEditServiceModal ? <EditNews setNew = {setNewData} category = {category} close = {closeEdeitServiceModal} inData = {singleNews} /> : null }
 
         <UIHolder>
+
+            { loading ? <Loader/> : null }
             
-            <NewsroomTable open = {addService} table__data = {news} setNew = {setNewData} handleEdit = {editService} />
+            <NewsroomTable open = {addService} table__data = {news} setNew = {setNewData} handleEdit = {editService} size = {size.length} loading = {loading} />
+
+            <Pagination size = {size} page = {page} topic = {topic} />
 
         </UIHolder>
 

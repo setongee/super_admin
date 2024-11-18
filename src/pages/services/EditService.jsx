@@ -13,6 +13,7 @@ export default function EditService({setNew, close, category, inData}) {
     const [data, setData] = useState(inData);
     const [addtagModal, setaddtagModal] = useState(false)
     const [tags, setTags] = useState(inData.categories);
+    const [formatTags, setFormatTags] = useState(inData?.formattedName);
     const [keyw, setKeyw] = useState(() => {
         const keyholder = inData.keywords.map( k => k.key ).join(', ');
         return keyholder;
@@ -76,26 +77,28 @@ export default function EditService({setNew, close, category, inData}) {
 
     }, [addtagModal]);
 
+    
     useEffect(() => {
 
         setData(e => {
 
             return {
                 ...e,
-                "categories" : tags
+                "categories" : tags,
+                "formattedName" : formatTags
             }
         }) 
 
     }, [tags]);
 
-    const addTag = (e, tagName) => {
+    const addTag = (e, tagName, formattedName) => {
 
         let checked = e.target.checked;
 
         if(checked) {
 
             setTags([...tags, tagName]);
-            
+            setFormatTags([...formatTags, formattedName]);
             
         }
 
@@ -107,13 +110,17 @@ export default function EditService({setNew, close, category, inData}) {
         
     }
 
-    const removeTag = (tagName) => {
+    const removeTag = (tagName, formattedName) => {
 
         const newTagArr = tags.filter( e => e !== tagName );
+        const newTagArrFormat = formatTags.filter( e => e !== formattedName );
+        
         setTags(newTagArr); 
+        setFormatTags(newTagArrFormat);
 
     }
 
+    
     const handleChange = (e) => {
 
         const {name, value} = e.target;
@@ -176,6 +183,8 @@ export default function EditService({setNew, close, category, inData}) {
         setData({...data, keywords : ready})
 
     }
+
+    console.log(data)
 
   return (
     
@@ -257,7 +266,7 @@ export default function EditService({setNew, close, category, inData}) {
                                     <div className="checkboxes">
 
                                         {
-                                            queryResults.length ? queryResults.map( data => <Services__category key = {data._id} name = {data.name} tags = {addTag} tagsZone = {tags} /> ) : <p>Nothing Found</p>
+                                            queryResults.length ? queryResults.map( data => <Services__category key = {data._id} name = {data.name} format = {data.formattedName} tags = {addTag} tagsZone = {tags} /> ) : <p>Nothing Found</p>
                                         }
 
                                     </div>

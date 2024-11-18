@@ -4,6 +4,7 @@ import { getAllCategory, getSingleCategory } from '../../api/category.req'
 import Table from './Table'
 import AddCategory from './addCategory'
 import EditCategory from './EditCategory'
+import Loader from '../../components/loader/loader'
 
 export default function Category() {
 
@@ -12,10 +13,22 @@ export default function Category() {
   const [singleCategory, setSingleCategory] = useState([]);
   const [newData, setNewData] = useState([]);
   const [category, setCategory] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
 
-    getAllCategory().then( e => setCategory(e.data) );
+    setLoading(true);
+
+    getAllCategory().then( e => {
+      
+      setTimeout(() => {
+
+        setCategory(e.data)
+        setLoading(false)
+        
+      }, 0);
+
+    } );
     
   }, [newData]);
 
@@ -59,7 +72,8 @@ export default function Category() {
 
         <UIHolder>
 
-            <Table open = {addService} table__data = {category} setNew = {setNewData} handleEdit = {editService} />
+            { loading ? <Loader/> : null }
+            <Table open = {addService} table__data = {category} setNew = {setNewData} handleEdit = {editService} loading = {loading} />
 
         </UIHolder>
 

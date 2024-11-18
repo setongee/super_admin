@@ -5,6 +5,7 @@ import Form from '../../components/forms/Form'
 import axios from 'axios'
 import FormEdit from '../../components/forms/FormEdit'
 import { getAllMdas, getSingleMda } from '../../api/mda.req'
+import Loader from '../../components/loader/loader'
 
 export default function Mda() {
 
@@ -13,6 +14,7 @@ export default function Mda() {
   const [table__data, setTableData] = useState([]);
   const [newMda, setNewMda] = useState([]);
   const [dataEdit, setDataEdit] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const openShow = () => {
 
@@ -44,8 +46,14 @@ const handleEdit = async (id) => {
 
 useEffect(() => {
 
-  getAllMdas()
-  .then( res => setTableData(res) );
+  setLoading(true);
+
+  getAllMdas().then( res => {
+
+    setTableData(res);
+    setLoading(false)
+
+  } );
 
 }, [newMda]);
 
@@ -64,6 +72,8 @@ useEffect(() => {
     <div className="mdas">
 
         <UIHolder>
+
+            { loading ? <Loader/> : null }
 
             <TableComponent open = {openShow} table__data={table__data} setNew = {setNewMda} handleEdit = {handleEdit} />
             

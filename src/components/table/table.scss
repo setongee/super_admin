@@ -250,3 +250,31 @@
     }
 
 }
+
+.txtpo{
+    height: 560px;
+    overflow-y: auto;
+
+    .d{
+        .main{
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 11px;
+            line-height: 19px;
+            font-weight: 600;
+        }
+    }
+}
+
+.spinnerlx{
+    position: absolute;
+    z-index: 999;
+    height: 100%;
+    width: 100%;
+    background-color: rgba($color: #000000, $alpha: .6);
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

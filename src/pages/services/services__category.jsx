@@ -1,7 +1,7 @@
 import { Check } from 'iconoir-react'
 import React, {useEffect} from 'react'
 
-export default function Services__category({name, tags, tagsZone}) {
+export default function Services__category({name, tags, tagsZone, format}) {
 
   return (
   
@@ -10,7 +10,7 @@ export default function Services__category({name, tags, tagsZone}) {
         <div className="box"> 
 
             {
-                tagsZone.includes(name) ? <input type="checkbox" onChange={e => tags(e, name)} checked /> : <input type="checkbox" onChange={e => tags(e, name)} /> 
+                tagsZone.includes(name) ? <input type="checkbox" onChange={e => tags(e, name)} checked /> : <input type="checkbox" onChange={e => tags(e, name, format)} /> 
 
             }
             

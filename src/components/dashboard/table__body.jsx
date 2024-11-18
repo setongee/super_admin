@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import { ArrowDown, ArrowDownLeft, ArrowUp, ArrowUpRight } from 'iconoir-react'
 import { formatDate } from '../../middleware/middleware';
+import Loader from '../loader/loader';
 
 export default function Table__body({data, type, uid}) {
 
@@ -27,7 +28,7 @@ export default function Table__body({data, type, uid}) {
 
   return (
 
-    <div className="table__body flex_align_centers">
+    <div className="table__body flex_align_centers" style={ { position : "relative" } }>
 
         <div className={`body__name flex ${type === "2" ? 'widee__90' : '' }`}> <div className="index thick">{ uid }.</div> {data.name } </div>
 

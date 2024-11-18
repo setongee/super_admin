@@ -23,7 +23,7 @@ export default function RouterClass() {
             <Route path = 'executive_council' element = { <Executive /> } />
             <Route path = 'category' element = { <Category /> } />
             <Route path = 'services' element = { <Services /> } />
-            <Route path = 'news' element = { <Newsroom /> } />
+            <Route path = 'news/:topic/:page' element = { <Newsroom /> } />
             <Route path = 'events' element = { <Mda /> } />
             <Route path = 'subscribers' element = { <Subscribers /> } />
             {/* <Route path = 'reports' element = { <Mda /> } /> */}

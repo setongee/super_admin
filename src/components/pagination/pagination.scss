@@ -1,0 +1,57 @@
+.pagination{
+    margin-top: 23px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+
+    .controls{
+        background-color: #fff;
+        height: 40px;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .pageControl{
+        display: flex;
+        width: 390px;
+        overflow: hidden;
+        gap: 10px;
+
+        .pageIndex{
+            min-width: 30px;
+            min-height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .activePage{
+            background-color: green;
+            color: #fff;
+            border-radius: 50%;
+        }
+    }
+
+    .link__point{
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 500;
+        cursor: pointer;
+
+        &:hover{
+            text-decoration: underline;
+            color: green;
+        }
+    }
+}

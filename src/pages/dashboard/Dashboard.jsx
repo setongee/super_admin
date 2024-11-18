@@ -7,10 +7,12 @@ import Charts from '../../components/charts/charts'
 import Table__body__more from '../../components/dashboard/table__body__more'
 import UIHolder from '../../components/holder/ui__holder'
 import { reports__data } from '../../api/reports.req';
+import Loader from '../../components/loader/loader'
 
 
 export default function Dashboard() {
-
+    
+    const [loading, setLoading] = useState(false);
     const [ reports, setReports ] = useState( 
     { 
         services : {
@@ -34,9 +36,14 @@ export default function Dashboard() {
     } );
 
     useEffect(() => {
+
+        setLoading(true);
         
         reports__data()
-        .then( e => setReports(e) )
+        .then( e => {
+            setReports(e);
+            setLoading(false)
+        } )
         .catch( err => console.log(err) )  
 
     }, []);
@@ -168,7 +175,7 @@ export default function Dashboard() {
 
                 {/* Stat Tables */}
 
-                <div className="stat__table size__60 radius__10">
+                <div className="stat__table size__60 radius__10" style={{position : "relative"}}>
 
                     {/* Title */}
                     <div className="table__title"> Recently Added Services </div>
@@ -181,20 +188,25 @@ export default function Dashboard() {
                     </div>
 
 
-                    {/* Body */}
-                    {
+                   <div className="bodyPally" style={{position : "relative"}}>
+                    
+                    { loading ? <Loader bg = "white" /> : null }
+
+                     {/* Body */}
+                     {
                         reports.services.data.length 
                         ?
                         reports.services.data.map( (res, index) => {
 
                             if ( index < 5 ) {
                                 return (
-                                    <Table__body type = "1" data = {res} key = {res._id} uid = {index + 1} />
+                                    <Table__body type = "1" data = {res} key = {res._id} uid = {index + 1} loading = {loading} />
                                 )
                             }
 
                         } ) : <p className='empty'> Sorry no services added yet! </p>
                     }
+                   </div>
 
                 </div>
 
