@@ -63,6 +63,8 @@ export default function Services() {
 
   }
 
+  console.log(category)
+
   return (
 
     <div className="services">
