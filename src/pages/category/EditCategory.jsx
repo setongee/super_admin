@@ -9,8 +9,27 @@ export default function EditCategory({setNew, close, inData}) {
     const [data, setData] = useState(inData);
     const [file, setFile] = useState([]);
     const [icon, setIcon] = useState(inData.icon);
+    const [keys, setKeys] = useState(() => {
+        const keyholder = inData?.keywords?.map( k => k.key ).join(', ');
+        return keyholder;
+    });
 
-    console.log(data)
+    const refineKeys = (e) => {
+
+        setKeys(e.target.value);
+        const trans = e.target.value.split(",")
+        
+        const ready = trans.map(res => {
+
+            return {
+                key : res.trim()
+            }
+
+        })
+
+        setData({...data, keywords : ready});
+
+    }
 
     const handleFile = e => {
 
@@ -52,9 +71,11 @@ export default function EditCategory({setNew, close, inData}) {
 
     }
 
+    console.log(data)
+
     const handleSubmit = async () => {
 
-        if(data.name === '' || data.short === '' ) {
+        if(data.name === '' || data.short === '' || data.keywords === '' ) {
 
             alert("All fields are required before adding. Try again!");
 
@@ -155,6 +176,13 @@ export default function EditCategory({setNew, close, inData}) {
 
                         <label> Short description of service (max 100 characters) </label>
                         <input type="text" name = 'short' value = {data.short} placeholder='Enter here...' onChange={(handleChange)} maxLength="100" />
+
+                    </div>
+
+                    <div className="form__holder">
+
+                        <label> Keywords (associated with the category) </label>
+                        <input type="text" name = 'keywords' value = {keys} placeholder='Enter here...' onChange={(refineKeys)} />
 
                     </div>
 

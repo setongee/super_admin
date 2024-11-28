@@ -29,8 +29,6 @@ export const getAllCategory = async () => {
 
 export const updateCategory = async (id, data) => {
 
-    console.log(data)
-
     const response = await axios.put(`${base_url}/${id}/update`, data);
     
     if(response.status === 200) {

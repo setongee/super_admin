@@ -32,9 +32,14 @@ export default function Sidebar() {
 
     }
     
-    
-    
   }, [path]);
+  
+  useEffect(() => {
+   
+    const holders = document.querySelector('.holding')
+    const header = document.querySelector('.header__main')
+
+  }, []);
 
   return (
 
@@ -95,7 +100,7 @@ export default function Sidebar() {
                   
                   </a>
 
-                  <a href='/news' className="link news"> 
+                  <a href='/news/all/1' className="link news"> 
 
                     <div className="icon"><Internet/></div> 
                     <div className="text"> Newsroom </div>

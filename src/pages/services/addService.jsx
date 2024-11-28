@@ -9,11 +9,12 @@ import LASGEditor from '../../components/textEditor/lasg_custom_editor';
 
 export default function AddService({setNew, close, category}) {
 
-    const [data, setData] = useState({name : '', content : '', keywords : [], tags : [], url : '', cta : '', short : '', isOffline : false, formattedName : [] });
+    const [data, setData] = useState({name : '', content : '', categories : [], keywords : [], keywordsTrim : [], keywordsGroup : {}, url : '', cta : '', short : '', isOffline : false, formattedName : [] });
     const [addtagModal, setaddtagModal] = useState(false)
     const [tags, setTags] = useState([]);
     const [formatTags, setFormatTags] = useState([]);
     const [keyw, setKeyw] = useState("");
+    const [customKeywords, setCustomKeywords] = useState("");
     const [search, setSearch] = useState("");
     const [queryResults, setQueryResults] = useState(category);
 
@@ -73,26 +74,22 @@ export default function AddService({setNew, close, category}) {
 
     }, [addtagModal]);
 
+
     useEffect(() => {
 
-        setData(e => {
-
-            return {
-                ...e,
-                "categories" : tags,
-                "formattedName" : formatTags
-            }
-        }) 
+        setData( {...data, categories : tags, formattedName : formatTags} )
 
     }, [tags]);
 
-    const addTag = (e, tagName, formattedName) => {
+
+    const addTag = (e, tagName, formattedName, categoryKey) => {
 
         let checked = e.target.checked;
 
         if(checked) {
 
             setTags([...tags, tagName]);
+            addCategoryKeyword(formattedName);
             setFormatTags([...formatTags, formattedName]);
             
         }
@@ -104,14 +101,67 @@ export default function AddService({setNew, close, category}) {
         }
         
     }
-
-    const removeTag = (tagName, formattedName) => {
+console.log(data)
+    const removeTag = (tagName) => {
 
         const newTagArr = tags.filter( e => e !== tagName );
-        const newTagArrFormat = formatTags.filter( e => e !== formattedName );
+        const findOne = queryResults.filter( e => e.name === tagName );
+        const newTagArrFormat = formatTags.filter( e => e !== findOne[0].formattedName);
         
         setTags(newTagArr); 
         setFormatTags(newTagArrFormat);
+
+        removeCategoryKeyword(tagName)
+
+    }
+
+    const addCategoryKeyword = (name) => {
+
+        const findCategory = category.filter( e => e.formattedName === name )  
+
+        if(findCategory.length){
+
+            const keyholder = findCategory[0].keywords;
+            const stringVersion = keyholder.map( k => k.key ).join(', ');
+            
+            if (keyw === "") {
+                setKeyw( stringVersion );   
+                refineKeywordsTrim(stringVersion);       
+            } else{
+                setKeyw( keyw + ', ' + stringVersion );
+                refineKeywordsTrim(keyw + ', ' + stringVersion);    
+            }
+
+            data.keywordsGroup[findCategory[0].formattedName] = keyholder;  
+
+        }
+
+    }
+
+    const removeCategoryKeyword = (name) => {
+
+        const findCategory = category.filter( e => e.name === name )  
+        let format = findCategory[0].formattedName;
+
+        if(findCategory.length){
+            
+            const keyholder = findCategory[0].keywords;
+            const stringVersion = keyholder.map( k => k.key ).join(', ');
+
+            const newKeywords = keyw.replace(stringVersion, '');
+            setKeyw( newKeywords );
+
+            refineKeywordsTrim(newKeywords);
+
+        }
+        
+        const updatedObj = Object.fromEntries(
+
+            Object.entries(data.keywordsGroup).filter(([key]) => key !== format )
+
+        );
+
+        data.keywordsGroup = updatedObj;
 
     }
 
@@ -138,14 +188,14 @@ export default function AddService({setNew, close, category}) {
 
     const handleSubmit = async () => {
 
-        if(data.name === '' || data.content === '' || !data.categories.length || !data.keywords.length  || data.url === '' || data.cta === '' || data.short === '' ) {
+        if(data.name === '' || data.content === '' || !data.categories.length || data.url === '' || data.cta === '' || data.short === '' ) {
 
             alert("All fields are required before adding. Try again!")
 
 
         } else {
 
-            const response = await axios.post('https://oyster-app-7x7p7.ondigitalocean.app/api/v2/services/add/single', data);
+            const response = await axios.post('http://localhost:8000/api/v2/services/add/single', data);
         
             if (response.status === 200){
 
@@ -160,11 +210,26 @@ export default function AddService({setNew, close, category}) {
 
     }
 
+    const refineKeywordsTrim = (str) => {
 
-    const refineKeywords = (e) => {
+        const trans = str.split(",")
+
+        const ready = trans.map(res => {
+            return {
+                key : res.trim()
+            }
+        })
+
+        
+        setData({...data, keywordsTrim : ready})
+        
+    }
+
+
+    const refineCustomKeywords = (e) => {
 
         const val = e.target.value
-        setKeyw(val);
+        setCustomKeywords(val);
 
         const trans = val.split(",")
 
@@ -174,7 +239,7 @@ export default function AddService({setNew, close, category}) {
             }
         })
 
-        setData({...data, keywords : ready})
+        setData( { ...data, customKeywords : ready } );
 
     }
 
@@ -215,15 +280,23 @@ export default function AddService({setNew, close, category}) {
 
                     </div>
 
+                    {/*custom */}
+                    
+                    <div className="form__holder">
+
+                        <label> Add Custom Keywords (Use comma (,) to seperate keywords) </label>
+                        <input type="text" name = 'customKeywords' value = { customKeywords } placeholder='Enter here...' onChange={refineCustomKeywords} />
+
+                    </div>
+
                     {/*Keywords */}
                     
                     <div className="form__holder">
 
-                        <label> Keywords (Use comma (,) to seperate keywords) </label>
-                        <input type="text" name = 'key' value = { keyw } placeholder='Enter here...' onChange={refineKeywords} />
+                        <label> Category Generated Keywords </label>
+                        <input type="text" name = 'key' value = { keyw } placeholder='Enter here...' disabled />
 
                     </div>
-
                     
                     {/* Tags */}
 

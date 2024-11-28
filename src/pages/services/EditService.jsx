@@ -14,12 +14,30 @@ export default function EditService({setNew, close, category, inData}) {
     const [addtagModal, setaddtagModal] = useState(false)
     const [tags, setTags] = useState(inData.categories);
     const [formatTags, setFormatTags] = useState(inData?.formattedName);
-    const [keyw, setKeyw] = useState(() => {
-        const keyholder = inData.keywords.map( k => k.key ).join(', ');
-        return keyholder;
-    });
+    const [keyw, setKeyw] = useState("");
     const [search, setSearch] = useState("");
     const [queryResults, setQueryResults] = useState(category);
+    const [customKeywords, setCustomKeywords] = useState("");
+
+    useEffect(() => {
+        
+        const response = data.keywordsGroup;
+        const arr = Object.entries(response).map(res => res[1]);
+        const newArray = [].concat(...arr);
+        const keyholder = newArray.map( k => k.key ).join(', ');
+
+        setKeyw(keyholder);
+        
+    }, [data.keywordsGroup]);
+
+    useEffect(() => {
+        
+        const response = data.customKeywords;
+        const arr = response.map( k => k.key ).join(', ');
+        
+        setCustomKeywords(arr);
+        
+    }, []);
 
     const getText = (text) => {
 
@@ -63,6 +81,7 @@ export default function EditService({setNew, close, category, inData}) {
 
     }, [search]);
 
+
     useEffect(() => {
 
         setQueryResults(category)
@@ -80,14 +99,7 @@ export default function EditService({setNew, close, category, inData}) {
     
     useEffect(() => {
 
-        setData(e => {
-
-            return {
-                ...e,
-                "categories" : tags,
-                "formattedName" : formatTags
-            }
-        }) 
+        setData( {...data, categories : tags, formattedName : formatTags } )
 
     }, [tags]);
 
@@ -99,6 +111,7 @@ export default function EditService({setNew, close, category, inData}) {
 
             setTags([...tags, tagName]);
             setFormatTags([...formatTags, formattedName]);
+            addCategoryKeyword(formattedName);
             
         }
 
@@ -118,7 +131,60 @@ export default function EditService({setNew, close, category, inData}) {
         
         setTags(newTagArr); 
         setFormatTags(newTagArrFormat);
+
+        removeCategoryKeyword(tagName)
     }
+
+    const addCategoryKeyword = (name) => {
+
+        const findCategory = category.filter( e => e.formattedName === name );
+
+        if(findCategory.length){
+
+            const keyholder = findCategory[0].keywords;
+            const stringVersion = keyholder.map( k => k.key ).join(', ');
+            
+            if (keyw === "") {
+                setKeyw( stringVersion );   
+                refineKeywordsTrim(stringVersion);       
+            } else{
+                setKeyw( keyw + ', ' + stringVersion );
+                refineKeywordsTrim(keyw + ', ' + stringVersion);    
+            }
+
+            data.keywordsGroup[findCategory[0].formattedName] = keyholder;            
+
+        }
+
+    }
+
+    const removeCategoryKeyword = (name) => {
+
+        const findCategory = category.filter( e => e.name === name )  
+        let format = findCategory[0].formattedName;
+
+        if(findCategory.length){
+            
+            const keyholder = findCategory[0].keywords;
+            const stringVersion = keyholder.map( k => k.key ).join(', ');
+
+            const newKeywords = keyw.replace(stringVersion, '');
+            setKeyw( newKeywords );
+
+            refineKeywordsTrim(newKeywords);
+
+        }
+        
+        const updatedObj = Object.fromEntries(
+
+            Object.entries(data.keywordsGroup).filter(([key]) => key !== format )
+
+        );
+
+        data.keywordsGroup = updatedObj;
+        
+    }
+    
     
     const handleChange = (e) => {
 
@@ -143,7 +209,7 @@ export default function EditService({setNew, close, category, inData}) {
 
     const handleSubmit = async () => {
 
-        if(data.name === '' || data.content === '' || !data.categories.length || !data.keywords.length || data.url === '' || data.cta === '' || data.short === '' ) {
+        if(data.name === '' || data.content === '' || !data.categories.length || data.url === '' || data.cta === '' || data.short === '' ) {
 
             alert("All fields are required before adding. Try again!")
 
@@ -166,10 +232,27 @@ export default function EditService({setNew, close, category, inData}) {
 
     }
 
-    const refineKeywords = (e) => {
+    const refineKeywordsTrim = (str) => {
+
+        console.log(str)
+
+        const trans = str.split(",")
+
+        const ready = trans.map(res => {
+            return {
+                key : res.trim()
+            }
+        })
+
+        
+        setData({...data, keywordsTrim : ready})
+        
+    }
+
+    const refineCustomKeywords = (e) => {
 
         const val = e.target.value
-        setKeyw(val);
+        setCustomKeywords(val);
 
         const trans = val.split(",")
 
@@ -179,9 +262,11 @@ export default function EditService({setNew, close, category, inData}) {
             }
         })
 
-        setData({...data, keywords : ready})
+        setData({...data, customKeywords : ready})
 
     }
+    
+    console.log(data)
 
   return (
     
@@ -220,12 +305,30 @@ export default function EditService({setNew, close, category, inData}) {
 
                     </div>
 
-                     {/*Keywords */}
+                     {/* Keywords
                     
                     <div className="form__holder">
 
                         <label> Keywords (Use comma (,) to seperate keywords) </label>
                         <input type="text" name = 'key' value = { keyw } placeholder='Enter here...' onChange={refineKeywords} />
+
+                    </div> */}
+
+                    {/*custom */}
+                    
+                    <div className="form__holder">
+
+                        <label> Add Custom Keywords (Use comma (,) to seperate keywords) </label>
+                        <input type="text" name = 'customKeywords' value = { customKeywords } placeholder='Enter here...' onChange={refineCustomKeywords} />
+
+                    </div>
+
+                    {/*Keywords */}
+                    
+                    <div className="form__holder">
+
+                        <label> Category Generated Keywords </label>
+                        <input type="text" name = 'key' value = { keyw } placeholder='Enter here...' disabled />
 
                     </div>
 

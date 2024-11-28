@@ -5,7 +5,7 @@ import UIHolder from '../../components/holder/ui__holder'
 import ServiceTable from './serviceTable'
 import axios from 'axios'
 import AddService from './addService'
-import { getServices, getSingleService } from '../../api/services.req'
+import { getServices, getSingleService, updateSingleService } from '../../api/services.req'
 import EditService from './EditService'
 import { getAllCategory } from '../../api/category.req'
 import Loader from '../../components/loader/loader'
@@ -63,11 +63,39 @@ export default function Services() {
 
   }
 
-  console.log(category)
+  const updateAll = async () => {
+
+    // const red = services.filter(e => !e.keywordsTrim)
+    // console.log(red)
+
+      // services.map( async(res, index) => {
+
+      //   const uid = res._id;
+
+      //   await getSingleService(uid)
+      //   .then( async (e) => {
+
+      //     const response = e.data.keywordsGroup;
+      //     const arr = Object.entries(response).map(res => res[1]);
+      //     const newArray = [].concat(...arr);
+
+      //     const newData = {...e.data, keywordsTrim : newArray}
+          
+      //     await updateSingleService(uid, newData).then( () => console.log("updated") );
+
+      //     console.log("updated" + " " + index );
+
+      //   } )
+
+      // })
+
+  }
 
   return (
 
     <div className="services">
+
+        {/* <div className="buttonReload" onClick={()=>updateAll()} style={ { position : "fixed", top : "50px", cursor : "pointer", borderRadius : "8px", left : "50%", padding : "20px 30px", backgroundColor : "orange", color : "#fff", zIndex : 9999999 } } > RefreshServices </div> */}
 
         { openModal ? <AddService setNew = {setNewData} category = {category} close = {closeModal} /> : null }
 

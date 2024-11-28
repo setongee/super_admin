@@ -6,7 +6,13 @@ import axios from 'axios'
 
 export default function ServiceTable({open, table__data, setNew, handleEdit}) {
 
-    // const [table__data, setTableData] = useState();
+    const [services, setServices] = useState([])
+
+    useEffect(() => {
+
+        setServices(table__data);
+
+    }, [table__data]);
       
   return (
 
@@ -16,7 +22,7 @@ export default function ServiceTable({open, table__data, setNew, handleEdit}) {
        
         <div className="table__actions__area flex flex_align_center flex_justify_space_between">
 
-            <div className="table__title thick"> Lagos State Services ({table__data.length}) </div>
+            <div className="table__title thick"> Lagos State Services ({services?.length}) </div>
             
             <div className="table__actions flex flex_align_center">
 
@@ -54,7 +60,7 @@ export default function ServiceTable({open, table__data, setNew, handleEdit}) {
             </div>
 
             {
-                table__data.length ? table__data.map( (res, index) => {
+                services?.length ? services?.map( (res, index) => {
 
                     return <ServiceTableData data = {res} key = {index} setNew = {setNew} handleEdit = {handleEdit} />
 

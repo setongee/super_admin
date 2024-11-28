@@ -8,10 +8,30 @@ import { formatCategoryName } from '../../middleware/middleware';
 
 export default function AddCategory({setNew, close, category}) {
 
-    const [data, setData] = useState({name : '', short : '', isOffline : false, icon : {} } );
+    const [data, setData] = useState({name : '', short : '', keywords : '', isOffline : false, icon : {} } );
 
     const [file, setFile] = useState([]);
     const [icon, setIcon] = useState(wrench);
+    const [keys, setKeys] = useState("");
+
+    const refineKeys = (e) => {
+
+        setKeys(e.target.value);
+        const trans = e.target.value.split(",")
+        
+        const ready = trans.map(res => {
+
+            return {
+                key : res.trim()
+            }
+
+        })
+
+        setData({...data, keywords : ready});
+
+    }
+
+    console.log(data)
 
     const handleChange = (e) => {
 
@@ -55,7 +75,7 @@ export default function AddCategory({setNew, close, category}) {
 
     const handleSubmit = async () => {
 
-        if(data.name === '' || data.short === '' || !file.length ) {
+        if(data.name === '' || data.keywords === '' || data.short === '' || !file.length ) {
 
             alert("All fields are required before adding. Try again!");
 
@@ -79,7 +99,6 @@ export default function AddCategory({setNew, close, category}) {
             
                     }})
                     .then( response => {
-                        console.log(response);
                         setNew(response.data);
                         closeShow();
                     })
@@ -136,6 +155,13 @@ export default function AddCategory({setNew, close, category}) {
 
                         <label> Short description of category (max 100 characters) </label>
                         <input type="text" name = 'short' value = {data.short} placeholder='Enter here...' onChange={(handleChange)} maxLength="100" />
+
+                    </div>
+
+                    <div className="form__holder">
+
+                        <label> Keywords (associated with the category) </label>
+                        <input type="text" name = 'keywords' value = {keys} placeholder='Enter here...' onChange={(refineKeys)} />
 
                     </div>
 

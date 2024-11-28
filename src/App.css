@@ -234,3 +234,17 @@ body {
   background-color: var(--background__main);
 
 }
+
+
+.collapseSidebar{
+
+  background-color: #fff;
+  width: 70px;
+  height: 100vh;
+  position: fixed;
+  border-right: 1px solid #eee;
+  padding: 25px 0px;
+  display: flex;
+  justify-content: center;
+
+}
