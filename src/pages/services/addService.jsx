@@ -6,6 +6,7 @@ import Services__category from './services__category';
 import Fuse from 'fuse.js';
 import CMS_Editor from '../../components/textEditor/CMS_Editor';
 import LASGEditor from '../../components/textEditor/lasg_custom_editor';
+import { addSingleService } from '../../api/services.req';
 
 export default function AddService({setNew, close, category}) {
 
@@ -195,16 +196,11 @@ console.log(data)
 
         } else {
 
-            const response = await axios.post('http://localhost:8000/api/v2/services/add/single', data);
-        
-            if (response.status === 200){
-
-
+            addSingleService(data)
+            .then( response => {
                 setNew(response.data);
                 closeShow();
-            
-
-            }
+            })
 
         }
 

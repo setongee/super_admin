@@ -265,8 +265,6 @@ export default function EditService({setNew, close, category, inData}) {
         setData({...data, customKeywords : ready})
 
     }
-    
-    console.log(data)
 
   return (
     

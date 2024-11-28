@@ -15,6 +15,18 @@ export const getServices = async () => {
 
 }
 
+export const addSingleService = async (data) => {
+
+    const response = await axios.post(`${base_url}/add/single`, data);
+    
+    if(response.status === 200) {
+        return response.data;
+    } else{
+        return [];
+    }
+
+}
+
 export const getSingleService = async (id) => {
 
     const data = await axios.get(`${base_url}/get/single/${id}`);
