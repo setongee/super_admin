@@ -106,13 +106,13 @@ export default function Sidebar() {
                     <div className="text"> Newsroom </div>
                   
                   </a>
-
+{/* 
                   <a href='/events' className="link events"> 
 
                     <div className="icon"><Tv/></div> 
                     <div className="text"> Events </div>
                   
-                  </a>
+                  </a> */}
 
                   <a href='/subscribers' className="link subscribers"> 
 

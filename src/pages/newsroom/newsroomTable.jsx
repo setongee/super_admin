@@ -16,7 +16,7 @@ NewsroomTable( { open, table__data, setNew, handleEdit, size, loading } ) {
        
         <div className="table__actions__area flex flex_align_center flex_justify_space_between">
 
-            <div className="table__title thick"> Newsroom ({size}) </div>
+            <div className="table__title thick"> Newsroom </div>
             
             <div className="table__actions flex flex_align_center">
 
