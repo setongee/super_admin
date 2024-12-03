@@ -19,6 +19,8 @@ export default function EditService({setNew, close, category, inData}) {
     const [queryResults, setQueryResults] = useState(category);
     const [customKeywords, setCustomKeywords] = useState("");
 
+    console.log(data)
+
     useEffect(() => {
         
         const response = data.keywordsGroup;

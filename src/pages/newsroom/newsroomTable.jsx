@@ -20,12 +20,12 @@ NewsroomTable( { open, table__data, setNew, handleEdit, size, loading } ) {
             
             <div className="table__actions flex flex_align_center">
 
-                <div className="action action__filter flex flex_align_center table__btn__outline btn__main">
+                {/* <div className="action action__filter flex flex_align_center table__btn__outline btn__main">
 
                     <p>Filter</p>
                     <div className="icon down"> <NavArrowDown/> </div>
 
-                </div>
+                </div> */}
 
                 <div className="addMda flex flex_align_center table__btn__solid btn__main" onClick = { () => open() } > 
 

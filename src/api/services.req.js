@@ -39,6 +39,31 @@ export const getSingleService = async (id) => {
 
 }
 
+export const getServicesByCategory = async (category) => {
+
+    const data = await axios.get(`${base_url}/get/category/${category}`);
+    
+    if(data.status === 200) {
+        return data.data;
+    } else{
+        return [];
+    }
+
+}
+
+export const updateServicesByCategory = async (category) => {
+
+    const data = await axios.get(`${base_url}/edit/category/${category}`);
+    
+    if(data.status === 200) {
+        return data.data;
+    } else{
+        return [];
+    }
+
+}
+
+
 export const updateSingleService = async (id, data) => {
 
     const response = await axios.put(`${base_url}/update/${id}`, data);

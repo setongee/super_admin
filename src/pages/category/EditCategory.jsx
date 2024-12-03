@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import { Xmark } from 'iconoir-react';
-import { updateCategory } from '../../api/category.req';
+import { getSingleCategory, updateCategory } from '../../api/category.req';
 import { formatCategoryName } from '../../middleware/middleware';
 
 export default function EditCategory({setNew, close, inData}) {
@@ -70,8 +70,7 @@ export default function EditCategory({setNew, close, inData}) {
         setData({})
 
     }
-
-    console.log(data)
+    
 
     const handleSubmit = async () => {
 
