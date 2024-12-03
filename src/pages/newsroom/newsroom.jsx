@@ -82,6 +82,16 @@ export default function Newsroom() {
 
   }
 
+  // useEffect(() => {
+    
+  //   if(openModal) {
+  //       document.body.style.overflow = "hidden"
+  //   } else{
+  //     document.body.style.overflow = "visible"
+  //   }
+
+  // }, [openModal]);
+
   return (
 
     <div className="services">

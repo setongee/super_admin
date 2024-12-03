@@ -278,3 +278,45 @@
     align-items: center;
     justify-content: center;
 }
+
+@media (max-height : 880px) {
+    .txtpo{
+        height: 480px;
+        overflow-y: auto;
+    }
+}
+
+@media (max-height : 850px) {
+    .txtpo{
+        height: 440px;
+        overflow-y: auto;
+    }
+}
+
+@media (max-height : 820px) {
+    .txtpo{
+        height: 420px;
+        overflow-y: auto;
+    }
+}
+
+@media (max-height : 800px) {
+    .txtpo{
+        height: 400px;
+        overflow-y: auto;
+    }
+}
+
+@media (max-height : 775px) {
+    .txtpo{
+        height: 350px;
+        overflow-y: auto;
+    }
+}
+
+@media (max-height : 720px) {
+    .txtpo{
+        height: 300px;
+        overflow-y: auto;
+    }
+}

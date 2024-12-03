@@ -321,6 +321,12 @@ export default function AddNews({setNew, close, category}) {
                             ? 
                             (
                                 <div className="multipleSelect">
+
+                                    <div className="closeTagsArea flex">
+                                        <div className="topicPin"> Select Tags </div>
+                                        <div className="closeIn" onClick={ () => setaddtagModal(!addtagModal)} ><Xmark/></div>
+                                    </div>
+
                                     <div className="search"> <input type="text" placeholder='Search tags...' onChange={(e)=>setSearch(e.target.value)} value={search} /> </div>
                                     
                                     <div className="checkboxes">

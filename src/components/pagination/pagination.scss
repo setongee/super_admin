@@ -5,6 +5,16 @@
     align-items: center;
     justify-content: center;
     gap: 30px;
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    // top: 0;
+    left: 0;
+    margin-left: 280px;
+    width: calc(100% - 280px);
+    bottom: 0;
+    background-color: #fff;
+    height: 100px;
 
     .controls{
         background-color: #fff;
