@@ -3,10 +3,35 @@ import { Filter, NavArrowDown, Plus } from 'iconoir-react'
 import '../../components/table/table.scss'
 import axios from 'axios'
 import CategoryTableData from './CategoryTableData'
+import Fuse from 'fuse.js';
 
 export default function Table({open, table__data, setNew, handleEdit, loading}) {
 
-    // const [table__data, setTableData] = useState();
+const [query, setQuery] = useState("");
+const [queryResults, setQueryResults] = useState([]);
+
+useEffect(() => {
+    
+    setQueryResults(table__data)
+
+}, [table__data]);
+
+useEffect(() => {
+
+    const fuseOptions = {
+
+    includeScore : true,
+    
+        keys: ["name"]
+    
+    };
+    
+    const fuse = new Fuse(table__data, fuseOptions);
+    const results = fuse.search(query);
+    const queriedRes =  query ? results.map(res => res.item) : table__data;
+    setQueryResults(queriedRes);
+    
+}, [query]);
       
   return (
 
@@ -16,16 +41,13 @@ export default function Table({open, table__data, setNew, handleEdit, loading}) 
        
         <div className="table__actions__area flex flex_align_center flex_justify_space_between">
 
-            <div className="table__title thick"> Categories ({table__data.length}) </div>
+            <div className="table__title thick"> Categories ({queryResults.length}) </div>
             
             <div className="table__actions flex flex_align_center">
 
-                {/* <div className="action action__filter flex flex_align_center table__btn__outline btn__main">
-
-                    <p>Filter</p>
-                    <div className="icon down"> <NavArrowDown/> </div>
-
-                </div> */}
+                <div className="searchComp">
+                    <input placeholder='Search Category table...' type="text" value={query} onChange={ (e) => setQuery(e.target.value) } />
+                </div>
 
                 <div className="addMda flex flex_align_center table__btn__solid btn__main" onClick = { () => open() } > 
 
@@ -53,7 +75,7 @@ export default function Table({open, table__data, setNew, handleEdit, loading}) 
             </div>
 
             {
-                table__data.length ? table__data.map( (res, index) => {
+                queryResults.length ? queryResults.map( (res, index) => {
 
                     return <CategoryTableData data = {res} key = {index} setNew = {setNew} handleEdit = {handleEdit} />
 

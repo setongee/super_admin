@@ -57,6 +57,16 @@ useEffect(() => {
 
 }, [newMda]);
 
+useEffect(() => {
+  
+  if(show){
+    document.body.style.overflow = "hidden"
+  }else{
+    document.body.style.overflow = "visible"
+  }
+
+}, [show]);
+
 
 
   const dataTable = {

@@ -53,6 +53,12 @@ export default function NewsTableData({data, setNew, handleEdit, index}) {
    
   }
 
+  const copyLink = () => {
+
+    navigator.clipboard.writeText(`https://lagosstate.gov.ng/news/all/view/${data._id}`);
+    alert("News url copied successfully!")
+  }
+
   return (
     
     <div className="table__data body__area">
@@ -86,7 +92,8 @@ export default function NewsTableData({data, setNew, handleEdit, index}) {
 
               <div className="more" id = 'more'>
 
-                <p onClick={() => window.open(data.url) }> Visit News URL </p>
+                <p onClick={() => copyLink() }> Copy News URL </p>
+                <p onClick={() => window.open(`https://lagosstate.gov.ng/news/all/view/${data._id}`) }> Visit News URL </p>
                 <p onClick={() => handleEdit(data._id)}>Edit News Details</p>
                 <p className='del' onClick={handleDelete}>Delete News</p>
 

@@ -83,10 +83,9 @@ export default function TableDataComponent({data, setNew, handleEdit}) {
 
               <div className="more" id = 'more'>
 
-                <p onClick={() => window.open( data.subdomain.split('.').length > 1 ? `https://${data.subdomain}` : `https://${data.subdomain}.lagosstate.gov.ng` ) }> Visit MDA Site </p>
+                {/* <p onClick={() => window.open( data.subdomain.split('.').length > 1 ? `https://${data.subdomain}` : `https://${data.subdomain}.lagosstate.gov.ng` ) }> Visit MDA Site </p> */}
                 <p onClick={() => handleEdit(data._id)}>Edit MDA Details</p>
-                <p>Reset Agent Password</p>
-                <p>Revoke Agent Access</p>
+                
                 <p className='del' onClick={handleDelete}>Delete MDA</p>
 
               </div>

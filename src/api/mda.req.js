@@ -10,7 +10,7 @@ const getAllMdas = async () => {
     
     if ( response.status === 200 ) {
 
-        let sortData = response.data.sort((a, b) => a.subdomain.toLowerCase().localeCompare(b.subdomain.toLowerCase(), 'en', { sensitivity: 'accent' }));
+        let sortData = response.data.data.sort((a, b) => a.subdomain.toLowerCase().localeCompare(b.subdomain.toLowerCase(), 'en', { sensitivity: 'accent' }));
 
         return sortData;
 

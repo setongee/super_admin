@@ -55,7 +55,7 @@ export default function FormEdit({close, setNew, dataOnload}) {
 
             <div className="form__title"> 
 
-                <div className="heading">Add new MDA</div>
+                <div className="heading"> Edit MDA </div>
                 <p>Kindly input all valid informations below</p>
                 
             </div>

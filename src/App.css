@@ -248,3 +248,24 @@ body {
   justify-content: center;
 
 }
+
+.searchComp{
+
+  width: 400px;
+  
+  input {
+    background-color: #fff;
+    border: none;
+    border: 1px solid #cccccc;
+    outline: none;
+    font-size: 14px;
+    height: 50px;
+    border-radius: 8px;
+    padding: 0 15px;
+    width: 100%;
+  }
+
+  input:focus{
+    border-color: green;
+  }
+}

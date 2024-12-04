@@ -2,17 +2,36 @@ import React, { useState, useEffect } from 'react'
 import { Filter, NavArrowDown, Plus } from 'iconoir-react'
 import '../../components/table/table.scss'
 import ServiceTableData from './serviceTableData'
-import axios from 'axios'
+import Fuse from 'fuse.js';
 
 export default function ServiceTable({open, table__data, setNew, handleEdit}) {
 
     const [services, setServices] = useState([])
+    const [query, setQuery] = useState("");
+    const [queryResults, setQueryResults] = useState(table__data);
 
     useEffect(() => {
-
-        setServices(table__data);
-
+    
+        setQueryResults(table__data)
+    
     }, [table__data]);
+
+useEffect(() => {
+
+    const fuseOptions = {
+
+    includeScore : true,
+    
+        keys: ["name"]
+    
+    };
+    
+    const fuse = new Fuse(table__data, fuseOptions);
+    const results = fuse.search(query);
+    const queriedRes =  query ? results.map(res => res.item) : table__data;
+    setQueryResults(queriedRes);
+    
+}, [query]);
       
   return (
 
@@ -22,16 +41,13 @@ export default function ServiceTable({open, table__data, setNew, handleEdit}) {
        
         <div className="table__actions__area flex flex_align_center flex_justify_space_between">
 
-            <div className="table__title thick"> Lagos State Services ({services?.length}) </div>
+            <div className="table__title thick"> Lagos State Services ({queryResults.length}) </div>
             
             <div className="table__actions flex flex_align_center">
 
-                {/* <div className="action action__filter flex flex_align_center table__btn__outline btn__main">
-
-                    <p>Filter</p>
-                    <div className="icon down"> <NavArrowDown/> </div>
-
-                </div> */}
+                <div className="searchComp">
+                    <input placeholder='Search Services table...' type="text" value={query} onChange={ (e) => setQuery(e.target.value) } />
+                </div>
 
                 <div className="addMda flex flex_align_center table__btn__solid btn__main" onClick = { () => open() } > 
 
@@ -60,7 +76,7 @@ export default function ServiceTable({open, table__data, setNew, handleEdit}) {
             </div>
 
             {
-                services?.length ? services?.map( (res, index) => {
+                queryResults.length ? queryResults.map( (res, index) => {
 
                     return <ServiceTableData data = {res} key = {index} setNew = {setNew} handleEdit = {handleEdit} />
 

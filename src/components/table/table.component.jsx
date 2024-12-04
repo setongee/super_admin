@@ -2,11 +2,36 @@ import React, { useState, useEffect } from 'react'
 import { Filter, NavArrowDown, Plus } from 'iconoir-react'
 import './table.scss'
 import TableDataComponent from './table.data.component'
-import axios from 'axios'
+import Fuse from 'fuse.js';
 
 export default function TableComponent({open, table__data, setNew, handleEdit}) {
 
-    // const [table__data, setTableData] = useState();
+const [query, setQuery] = useState("");
+const [queryResults, setQueryResults] = useState([]);
+
+useEffect(() => {
+    
+    setQueryResults(table__data)
+
+}, [table__data]);
+
+useEffect(() => {
+
+    const fuseOptions = {
+
+    includeScore : true,
+  
+      keys: ["name"]
+    
+    };
+  
+    const fuse = new Fuse(table__data, fuseOptions);
+    const results = fuse.search(query);
+    const queriedRes =  query ? results.map(res => res.item) : table__data;
+    setQueryResults(queriedRes);
+   
+}, [query]);
+
       
   return (
 
@@ -16,16 +41,13 @@ export default function TableComponent({open, table__data, setNew, handleEdit}) 
        
         <div className="table__actions__area flex flex_align_center flex_justify_space_between">
 
-            <div className="table__title thick"> LASG Ministries, Departments & Agencies </div>
+            <div className="table__title thick"> LASG Ministries, Departments & Agencies ({queryResults.length}) </div>
             
             <div className="table__actions flex flex_align_center">
 
-                {/* <div className="action action__filter flex flex_align_center table__btn__outline btn__main">
-
-                    <p>Filter</p>
-                    <div className="icon down"> <NavArrowDown/> </div>
-
-                </div> */}
+                <div className="searchComp">
+                    <input placeholder='Search MDAs table...' type="text" value={query} onChange={ (e) => setQuery(e.target.value) } />
+                </div>
 
                 <div className="addMda flex flex_align_center table__btn__solid btn__main" onClick={()=>open()}> 
 
@@ -54,7 +76,7 @@ export default function TableComponent({open, table__data, setNew, handleEdit}) 
             </div>
 
             {
-                table__data.length ? table__data.map( (res, index) => {
+                queryResults.length ? queryResults.map( (res, index) => {
 
                     return <TableDataComponent data = {res} key = {index} setNew = {setNew} handleEdit = {handleEdit} />
 
