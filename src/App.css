@@ -269,3 +269,22 @@ body {
     border-color: green;
   }
 }
+
+.pageNotFound{
+
+    margin: 0px 0;
+    margin-left: 280px;
+    width: calc(100% - 280px);
+    background-color: #f2f5f4;
+    padding: 0 10px;
+    margin-bottom: 0;
+    padding-bottom: 20px;
+    padding-top: 105px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-weight: 600;
+    font-size: 30px;
+
+}

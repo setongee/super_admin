@@ -32,7 +32,7 @@ export default function Sidebar() {
 
       let pathname = path.split('/')[1];
       const getElement = document.querySelector(`.${pathname}`);
-      getElement.classList.add('active');
+      getElement?.classList.add('active');
 
     }
     
