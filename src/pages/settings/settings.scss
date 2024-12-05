@@ -168,7 +168,7 @@ form{
     background-color: #fff;
     margin: 0 auto;
     margin-top: 20px;
-    width: 90%;
+    width: 100%;
     border-radius: 10px;
     padding: 30px;
 
@@ -214,4 +214,22 @@ form{
 
     }
 
+}
+
+.disabled{
+    color: #777 !important;
+}
+
+.sty{
+    text-transform: capitalize !important;
+}
+
+.emp{
+    font-weight: 600;
+    width: 15% !important;
+    
+}
+
+.emil{
+    width: 28% !important;
 }

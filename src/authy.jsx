@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import './authy.scss'
 import App from './App';
 import logo from './assets/lasg__logo.png'
+import { authenticateToken, loginUser } from './api/auth/login';
 
 export default function Authy() {
 
@@ -9,120 +10,114 @@ export default function Authy() {
     const [isValidated, setIsValidated] = useState(false);
     const access = "$2024/06?.lasg_access$009";
 
-    const handleSub = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-        const accessEle = document.getElementById('access_main').value;
+    const handleVerification = (token) => {
 
-        if (accessEle === ''){
+        authenticateToken(token)
+        .then(res => {
 
-           middle("All fields are required!", "bad");
-           
-           
+            if (res.status === "ok"){
 
-        } else if (accessEle !== access) {
+                window.localStorage.setItem('lasg_token', JSON.stringify({ token, id : res.data.id, role : res.data.role }));
+                setIsValidated(true);
 
-            middle( "Invalid / Unathorized Login", "bad")
+            } else{
+                setIsValidated(false);
+            }
 
-        } else {
-
-            window.sessionStorage.setItem('lasg_token', access);
-            middle("Login Successful!", "ok");
-            
-            setTimeout(() => {
-
-                setIsValidated(true)
-                
-            }, 2000);
-
-        }
-
-    }
-
-    const middle = (message, status) => {
-
-
-        const accessElement = document.getElementById('access');
-        const errorElement = document.getElementById('error');
-
-        setError(message);
-        accessElement.classList.add(status);
-        errorElement.classList.add(status)
-
-        setTimeout(() => {
-
-            setError('');
-            accessElement.classList.remove(status);
-            errorElement.classList.add(status)
-            
-        }, 3000);
-
+        } )
+    
     }
 
     useEffect(() => {
 
 
-        const db = window.sessionStorage.getItem('lasg_token');
+        const user = window.localStorage.getItem('lasg_token');
         
-        if (db && db === access) {
 
-            setIsValidated(true);
-
-        } else {
+        if (!user) {
 
             setIsValidated(false);
 
+        } else {
+
+            const parser = JSON.parse(user);
+            handleVerification(parser.token)
+
         }
+ 
         
-        
-    }, [isValidated]);
+    }, []);
+
+    const handleLogin = (email, password) => {
+
+        if (email === '' || password === '' ) {
+            
+            alert("All fields are required!");
+
+        }
+        else{
+
+            loginUser(email, password)
+            .then(res => {
+
+                if(res.status === "ok") {
+
+                    handleVerification(res.token)
+
+                }else{
+
+                    alert(res.message);
+
+                }
+
+            });
+
+        }
+
+    }
+
+
+   if (isValidated) return <App/>
+
 
   return (
 
     <div className="appHome">
 
-        {
-            isValidated 
+        <div className="authPage">
 
-            ? <App/> 
+        <div className="image__scoop"><img src={logo} alt="" /></div>
 
-            :
+        <div className="loginPart">
 
-            (
-                <div className="authPage">
+            <div className="topicTitle"> Hello There!  {<br></br>} <span>Welcome to LASG admin platform</span> </div>
 
-                    <div className="image__scoop"><img src={logo} alt="" /></div>
+            <div className="form"> 
 
-                    <div className="loginPart">
-
-                        <div className="topicTitle"> Hello There!  {<br></br>} <span>Welcome to LASG admin platform</span> </div>
-
-                        <div className="form"> 
-
-                            <div className="auth__form">
-                                <label>Email Address</label>
-                                <input type="email" placeholder='Enter email id' id = 'access' />
-                            </div>
-
-                            <div className="auth__form">
-                                <label>Password</label>
-                                <input type="text" placeholder='Enter password' id = 'access_main' />
-                            </div>
-                            <div className="submitBtn" onClick={ ()=>handleSub() }>Log into dashboard</div>
-
-                        </div>
-
-                        <div className="errorZone" id='error'> {error} </div>
-
-                    </div>
-
-                    <p className='foot'>Powered by Ministry of Innovation, Science & Technology</p>
-
+                <div className="auth__form">
+                    <label>Email Address</label>
+                    <input type="email" placeholder='Enter email id' id = 'access' name='email' value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
 
-            )
-        }
+                <div className="auth__form">
+                    <label>Password</label>
+                    <input type="text" placeholder='Enter password' id = 'access_main' name='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
 
-        
+                <div className="submitBtn" onClick = {  () => handleLogin(email, password) } > Log into dashboard </div>
+
+            </div>
+
+            <div className="errorZone" id='error'> {error} </div>
+
+        </div>
+
+        <p className='foot'>Powered by Ministry of Innovation, Science & Technology</p>
+
+        </div>
 
     </div>
 

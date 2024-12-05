@@ -1,9 +1,30 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './header.scss'
 import logo from  '../../assets/lasg__logo.png'
 import { Bell, Message, NavArrowDown, Search } from 'iconoir-react'
+import { getSingleUser } from '../../api/auth/user'
 
 export default function Header() {
+
+    const [userDetails, setUserDetails] = useState({ firstname : "", lastname : "", role : "" })
+
+    useEffect(() => {
+
+        const user = window.localStorage.getItem('lasg_token');
+        const parser = JSON.parse(user);
+
+        getSingleUser(parser.id)
+        .then( res => setUserDetails({firstname : res.firstname, lastname : res.lastname, role : res.role}) )
+ 
+        
+    }, []);
+
+    const handleSignOut = () => {
+
+        window.localStorage.removeItem('lasg_token');
+        window.location.reload();
+
+    }
 
   return (
 
@@ -47,12 +68,12 @@ export default function Header() {
 
                     <div className="account__current">
 
-                        <div className="account_bubble"> SA </div>
+                        <div className="account_bubble"> { userDetails.firstname.split("")[0] }{ userDetails.lastname.split("")[0] } </div>
 
                         <div className="name_agent">
 
-                            <div className="agent"> Setonji Avoseh </div>
-                            <div className="position"> Super Admin </div>
+                            <div className="agent"> {userDetails.firstname} {userDetails.lastname} </div>
+                            <div className="position"> {userDetails.role} </div>
 
                         </div>
 
@@ -68,7 +89,7 @@ export default function Header() {
 
                         <div className="list__options" onClick={()=>window.location.href = '/settings/profile'} > View Profile <span>Check out your profile and manage it</span> </div>
                         <div className="list__options" onClick={()=>window.location.href = '/settings/profile'} > Go to Settings <span> Setup preferences and security </span> </div>
-                        <div className="list__options baseMod thick"> Sign Out </div>
+                        <div className="list__options baseMod thick" onClick={()=>handleSignOut()}> Sign Out </div>
 
                     </div>
 

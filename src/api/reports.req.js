@@ -55,9 +55,9 @@ export const reportMDAs = async () => {
     
     if ( response.status === 200 ) {
 
-        if(response.data.length){
+        if(response.data.data.length){
 
-            const sortData = response.data.sort( (a, b) => {
+            const sortData = response.data.data.sort( (a, b) => {
 
                 return (a.updatedAt < b.updatedAt) ? -1 : ((a.updatedAt > b.updatedAt) ? 1 : 0);
     

@@ -98,11 +98,9 @@ export default function ServiceTableData({data, setNew, handleEdit}) {
             showMore ? (
 
               <div className="more" id = 'more'>
-
-                <p onClick={() => window.open( `https://lasgv2.vercel/services/.lagosstate.gov.ng` ) }> Preview Service Data </p>
-                <p onClick={() => window.open(data.url) }> Visit URL </p>
+                
                 <p onClick={() => handleEdit(data._id)}>Edit Service Details</p>
-                <p className='del' onClick={handleDelete}>Delete MDA</p>
+                <p className='del' onClick={handleDelete}>Delete Service</p>
 
               </div>
 
