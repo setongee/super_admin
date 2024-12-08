@@ -94,16 +94,20 @@ export default function Team() {
 
     const deleteUser = (firstname, lastname, id) => {
 
-        alert(`Are you sure you want to delete ${firstname} ${lastname}?`);
+        const confirm = window.confirm(`Are you sure you want to delete ${firstname} ${lastname}?`);
 
-        deleteSingleUser(id)
-        .then(res =>{
-            if (res.status === "ok"){
+        if (confirm) {
 
-                setAction(id);
+            deleteSingleUser(id)
+            .then(res =>{
+                if (res.status === "ok"){
 
-            }
-        })
+                    setAction(id);
+
+                }
+            });
+
+        }
 
     }
 

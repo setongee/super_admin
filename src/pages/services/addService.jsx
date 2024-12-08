@@ -102,7 +102,7 @@ export default function AddService({setNew, close, category}) {
         }
         
     }
-console.log(data)
+
     const removeTag = (tagName) => {
 
         const newTagArr = tags.filter( e => e !== tagName );
@@ -367,7 +367,7 @@ console.log(data)
 
                 <div className="editor">
 
-                    <LASGEditor value = {'<p>Start typing your text here...</p>'} readOnly = {false} submittableText = {getText} />
+                    <LASGEditor readOnly = {false} submittableText = {getText} />
 
                 </div>
 

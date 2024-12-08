@@ -13,12 +13,12 @@ export default function LASGEditor({value, readOnly, submittableText}) {
         submittableText(e);
 
     } 
-
+    
     return (
 
         <div className="card">
 
-            <Editor value={text} onTextChange={(e) => renderedHtml(e.htmlValue)} style={{ height: '650px' }} readOnly = {readOnly} />
+            <Editor value={text} onTextChange={(e) => renderedHtml(e.htmlValue)} style={{ height: '650px' }} readOnly = {readOnly} placeholder="Type your text here..." />
 
         </div>
 
