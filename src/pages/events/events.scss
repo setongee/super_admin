@@ -1,0 +1,199 @@
+.eventZone{
+
+    .main__form{
+
+        width: 700px;
+
+        .form__contain{
+            flex-direction: column;
+            align-items: center;
+        }
+
+    }
+    
+    .news__image{
+        background-color: #eee;
+        width: 100%;
+        height: 320px;
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;
+        border-radius: 5px;
+    
+        img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+    
+    .form__long{
+        overflow-y: auto;
+        scrollbar-width: none;
+        height: max-content;
+        width: 100% !important;
+    }
+    
+    .ER{
+        width: 100% !important;
+    }
+    
+    .tapTo{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 10px;
+        background-color: #eee;
+        border-radius: 5px;
+    }
+    
+    .sumUp{
+        position: absolute;
+        width: 100px !important;
+        right: 90px;
+        z-index: 99;
+        top: 19px;
+        margin: 0 !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: max-content !important;
+    
+    }
+    
+    .edit_news{
+        margin-top: 5px;
+    }
+    
+    .newsImageHere{
+        overflow: hidden;
+        border-radius: 10px !important;
+    
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    
+    .date-f{
+        letter-spacing: 0px;
+        word-spacing: 2px;
+    }
+    
+    #active{
+        background-color: green !important;
+        width: max-content;
+        padding: 0 5px;
+        border-radius: 3px;
+        margin-top: 1px;
+        font-size: 9px !important;
+        color: #fff;
+    }
+    
+    #isPast{
+        background-color: crimson !important;
+        width: max-content;
+        padding: 0 5px;
+        border-radius: 3px;
+        margin-top: 1px;
+        font-size: 9px !important;
+        color: #fff;
+    }
+}
+
+.attendees{
+
+    background-color: rgba($color: #000000, $alpha: 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+
+    .attend{
+
+        margin-top: 70px;
+        background-color: #fff;
+        height: 70vh;
+        width: 700px;
+        border-radius: 8px;
+        padding: 40px;
+
+        .attend__header{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #d6d6d6;
+            padding-bottom: 20px;
+
+            .action{
+                display: flex;
+                align-items: center;
+                gap: 30px;
+
+                .closeShow{
+
+                    cursor: pointer;
+                }
+            }
+
+            .attend__title{
+                font-size: 18px;
+                font-weight: 500;
+            }
+
+            .attend__csv{
+                font-size: 14px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                text-transform: uppercase;
+                font-size: 10px;
+                font-weight: 500;
+                letter-spacing: 2px;
+                background-color: #131313;
+                padding: 10px;
+                border-radius: 5px;
+                color: #fff;
+                cursor: pointer;
+            }
+        }
+
+        .attend__body{
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            .attendees__item{
+                display: flex;
+                font-size: 14px;
+                border-radius: 3px;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 20px;
+
+                div{
+                    width: 50%;
+                }
+            }
+
+            .attendees__item__th{
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+            }
+
+        }
+
+    }
+}

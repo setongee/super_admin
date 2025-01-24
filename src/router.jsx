@@ -9,6 +9,7 @@ import Executive from './pages/executive/executive'
 import Subscribers from './pages/subscribers/subscribers'
 import Settings from './pages/settings/settings'
 import { decodeURL } from './middleware/middleware'
+import Events from './pages/events/Events'
 
 export default function RouterClass() {
 
@@ -40,7 +41,7 @@ export default function RouterClass() {
                 <Route path = 'category' element = { <Category /> } />
                 <Route path = 'services' element = { <Services /> } />
                 <Route path = 'news/:topic/:page' element = { <Newsroom /> } />
-                <Route path = 'events' element = { <Mda /> } />
+                <Route path = 'events/:topic/:page' element = { <Events /> } />
                 <Route path = 'subscribers' element = { <Subscribers /> } />
                 {/* <Route path = 'reports' element = { <Mda /> } /> */}
                 <Route path = 'settings/:type' element = { <Settings /> } />

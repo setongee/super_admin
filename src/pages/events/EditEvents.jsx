@@ -1,15 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import { ArrowRight, Check, Plus, Xmark } from 'iconoir-react';
-import './newsroom.scss'
+import './events.scss'
 import Services__category from './services__category';
 import Fuse from 'fuse.js';
 import LASGEditor from '../../components/textEditor/lasg_custom_editor';
 import DateSelector from '../../components/date/dataSelector';
 import { addNews, updateNews } from '../../api/news.req';
 import { formatCategoryName, formatDate2 } from '../../middleware/middleware';
+import { getAllEvents, updateEvents } from '../../api/events.req';
 import { getAllMdas } from '../../api/mda.req';
 
-export default function EditNews({setNew, close, category, inData}) {
+export default function EditEvents({setNew, close, category, inData}) {
 
     const [data, setData] = useState(inData);
     const [addtagModal, setaddtagModal] = useState(false)
@@ -17,9 +18,6 @@ export default function EditNews({setNew, close, category, inData}) {
     const [search, setSearch] = useState("");
     const [queryResults, setQueryResults] = useState(category);
     const [mdas, setMdas] = useState([]);
-    
-
-    console.log(data)
 
     const [file, setFile] = useState([]);
 
@@ -96,10 +94,10 @@ export default function EditNews({setNew, close, category, inData}) {
         const findIn = document.querySelector('.p-inputtext')
         findIn.placeholder = 'Select date';
 
-        findIn.value = formatDate2(data.date)
+        findIn.value = formatDate2(data.date);
 
         getAllMdas()
-        .then(response => setMdas(response) );
+          .then(response => setMdas(response) );
 
     }, []);
 
@@ -197,14 +195,13 @@ export default function EditNews({setNew, close, category, inData}) {
             
                     try {
             
-                        updateNews(data._id, {...data, photo : {
+                        updateEvents(data._id, {...data, photo : {
 
                             temp : uniqueName,
                             data : reader.result
                 
                         }})
                         .then( response => {
-                            console.log(response);
                             setNew(response.data);
                             closeShow();
                         })
@@ -223,9 +220,8 @@ export default function EditNews({setNew, close, category, inData}) {
 
                 try {
              
-                    updateNews(data._id, data )
+                    updateEvents(data._id, data )
                     .then( response => {
-                        console.log(response);
                         setNew(response.data);
                         closeShow();
                     })
@@ -244,7 +240,7 @@ export default function EditNews({setNew, close, category, inData}) {
 
   return (
     
-    <div className="form__body service__point">
+    <div className="form__body service__point eventZone">
 
         <div className="main__form">
 
@@ -252,7 +248,7 @@ export default function EditNews({setNew, close, category, inData}) {
 
             <div className="form__title"> 
 
-                <div className="heading"> Create News </div>
+                <div className="heading"> Create Events </div>
                 <p>Kindly input all valid informations below</p>
                 
             </div>
@@ -265,7 +261,7 @@ export default function EditNews({setNew, close, category, inData}) {
 
                     <div className="form__holder">
 
-                        <label> News Image </label>
+                        <label> Event Image </label>
 
                         <div className="news__image" onClick={ () => handleClick() } >
 
@@ -282,7 +278,7 @@ export default function EditNews({setNew, close, category, inData}) {
 
                     <div className="form__holder">
 
-                        <label> News title </label>
+                        <label> Event title </label>
                         <input type="text" name = 'title' value = {data.title} placeholder='Enter here...' onChange={(handleChange)} />
 
                     </div>
@@ -292,7 +288,7 @@ export default function EditNews({setNew, close, category, inData}) {
 
                     <div className="form__holder date__bin">
 
-                        <label> Date created </label>
+                        <label> Event Date </label>
                         <DateSelector date__add = {handleDateChange} dateF = {data.date} />
 
                     </div>
@@ -368,12 +364,12 @@ export default function EditNews({setNew, close, category, inData}) {
 
                     </div>
 
-                    <div className="ssbmit__button sumUp" onClick={handleSubmit} > Update News <ArrowRight color='#fff'/> </div>
+                    <div className="ssbmit__button sumUp" onClick={handleSubmit} > Update Event <ArrowRight color='#fff'/> </div>
 
 
                 </div>
 
-                <div className="editor edit_news">
+                <div className="editor edit_news ER">
 
                     <LASGEditor value = {data.content} readOnly = {false} submittableText = {getText} />
 

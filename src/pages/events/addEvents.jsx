@@ -1,27 +1,25 @@
 import React, {useState, useEffect} from 'react'
 import { ArrowRight, Check, Plus, Xmark } from 'iconoir-react';
-import './newsroom.scss'
+import './events.scss'
 import Services__category from './services__category';
 import Fuse from 'fuse.js';
 import LASGEditor from '../../components/textEditor/lasg_custom_editor';
 import DateSelector from '../../components/date/dataSelector';
-import { addNews, updateNews } from '../../api/news.req';
-import { formatCategoryName, formatDate2 } from '../../middleware/middleware';
+import { formatCategoryName } from '../../middleware/middleware';
 import { getAllMdas } from '../../api/mda.req';
+import { addEvents } from '../../api/events.req';
 
-export default function EditNews({setNew, close, category, inData}) {
+export default function AddEvents({setNew, close, category}) {
 
-    const [data, setData] = useState(inData);
+    const [data, setData] = useState({title : '', content : '', categories : [], date : '', mda : '' });
     const [addtagModal, setaddtagModal] = useState(false)
-    const [categories, setCategories] = useState(inData.categories);
+    const [tags, setTags] = useState([]);
     const [search, setSearch] = useState("");
     const [queryResults, setQueryResults] = useState(category);
     const [mdas, setMdas] = useState([]);
-    
-
-    console.log(data)
 
     const [file, setFile] = useState([]);
+    const [photo, setPhoto] = useState('');
 
     const getText = (text) => {
 
@@ -57,11 +55,14 @@ export default function EditNews({setNew, close, category, inData}) {
             setQueryResults(category);
           }
           else{
-            const queriedRes =  results.filter( item => item.score < 0.1 ).map(res => res.item);
+            const queriedRes =  results.filter( item => item.score < 0.5 ).map(res => res.item);
            
             setQueryResults(queriedRes);
 
           }
+
+          getAllMdas()
+          .then(response => setMdas(response) );
 
     }, [search]);
 
@@ -85,22 +86,16 @@ export default function EditNews({setNew, close, category, inData}) {
 
             return {
                 ...e,
-                "categories" : categories
+                "categories" : tags
             }
         }) 
 
-    }, [categories]);
+    }, [tags]);
 
     useEffect(() => {
         
-        const findIn = document.querySelector('.p-inputtext')
-        findIn.placeholder = 'Select date';
-
-        findIn.value = formatDate2(data.date)
-
-        getAllMdas()
-        .then(response => setMdas(response) );
-
+        document.querySelector('.p-inputtext').placeholder = 'Select date'
+        
     }, []);
 
     const addTag = (e, tagName) => {
@@ -109,7 +104,7 @@ export default function EditNews({setNew, close, category, inData}) {
 
         if(checked) {
 
-            setCategories([...categories, tagName]);
+            setTags([...tags, tagName]);
             
             
         }
@@ -124,8 +119,8 @@ export default function EditNews({setNew, close, category, inData}) {
 
     const removeTag = (tagName) => {
 
-        const newTagArr = categories.filter( e => e !== tagName );
-        setCategories(newTagArr); 
+        const newTagArr = tags.filter( e => e !== tagName );
+        setTags(newTagArr); 
 
     }
 
@@ -162,7 +157,7 @@ export default function EditNews({setNew, close, category, inData}) {
 
             setFile(e.target.files);
             const min = window.URL.createObjectURL(e.target.files[0]);
-            setData({...data, photo : min});
+            setPhoto(min);
 
         }
         
@@ -177,7 +172,7 @@ export default function EditNews({setNew, close, category, inData}) {
 
     const handleSubmit = async () => {
 
-        if ( data.title === '' || data.content === '' || !data.categories.length || data.date === '' ) {
+        if ( data.title === '' || data.content === '' || !data.categories.length || data.date === '' || !file.length ) {
 
             alert("All fields are required before adding. Try again!");
             
@@ -185,47 +180,23 @@ export default function EditNews({setNew, close, category, inData}) {
 
         else {
 
-            if(file.length) {
+            const fileData = file[0];
+            let uniqueName = formatCategoryName(data.title);
 
-                const fileData = file[0];
-                let uniqueName = formatCategoryName(data.title);
+            const reader = new FileReader();
+            reader.readAsDataURL(fileData);
 
-                const reader = new FileReader();
-                reader.readAsDataURL(fileData);
-
-                reader.onloadend = () => { 
-            
-                    try {
-            
-                        updateNews(data._id, {...data, photo : {
-
-                            temp : uniqueName,
-                            data : reader.result
-                
-                        }})
-                        .then( response => {
-                            console.log(response);
-                            setNew(response.data);
-                            closeShow();
-                        })
-                        
-                    } catch (error) {
-            
-                        console.log(error.message);
-                        
-                    }
-
-                }
-
-            }
-
-            else{
-
+            reader.onloadend = () => { 
+        
                 try {
-             
-                    updateNews(data._id, data )
+        
+                    addEvents({...data, photo : {
+
+                        temp : uniqueName,
+                        data : reader.result
+            
+                    }})
                     .then( response => {
-                        console.log(response);
                         setNew(response.data);
                         closeShow();
                     })
@@ -244,7 +215,7 @@ export default function EditNews({setNew, close, category, inData}) {
 
   return (
     
-    <div className="form__body service__point">
+    <div className="form__body service__point eventZone">
 
         <div className="main__form">
 
@@ -252,7 +223,7 @@ export default function EditNews({setNew, close, category, inData}) {
 
             <div className="form__title"> 
 
-                <div className="heading"> Create News </div>
+                <div className="heading"> Create Event </div>
                 <p>Kindly input all valid informations below</p>
                 
             </div>
@@ -265,11 +236,11 @@ export default function EditNews({setNew, close, category, inData}) {
 
                     <div className="form__holder">
 
-                        <label> News Image </label>
+                        <label> Event Image </label>
 
                         <div className="news__image" onClick={ () => handleClick() } >
 
-                            <img src={data.photo} alt="" />
+                            <img src={photo} alt="" />
                             <div className="tapTo">Tap to edit</div>
 
                         </div>
@@ -282,7 +253,7 @@ export default function EditNews({setNew, close, category, inData}) {
 
                     <div className="form__holder">
 
-                        <label> News title </label>
+                        <label> Event Title </label>
                         <input type="text" name = 'title' value = {data.title} placeholder='Enter here...' onChange={(handleChange)} />
 
                     </div>
@@ -292,8 +263,8 @@ export default function EditNews({setNew, close, category, inData}) {
 
                     <div className="form__holder date__bin">
 
-                        <label> Date created </label>
-                        <DateSelector date__add = {handleDateChange} dateF = {data.date} />
+                        <label>Event Date </label>
+                        <DateSelector date__add = {handleDateChange} />
 
                     </div>
 
@@ -308,9 +279,9 @@ export default function EditNews({setNew, close, category, inData}) {
                             <option value="">--- Select a targeted MDA ---</option>
 
                             {
-                                mdas?.map( (res, index) => {
+                                mdas.map( (res, index) => {
 
-                                    return <option key = {index} value={res.name}>{res.name}</option>
+                                    return <option value={res.name}>{res.name}</option>
 
                                 } )
                             }
@@ -334,7 +305,7 @@ export default function EditNews({setNew, close, category, inData}) {
                             <div className="tags">
                                 
                                 {
-                                    categories.length ? categories.map((data => (
+                                    tags.length ? tags.map((data => (
 
                                         <div className="tag"> {data} <div className="rm_tag" onClick={ () => removeTag(data) } > <Xmark/> </div> </div>
 
@@ -350,12 +321,18 @@ export default function EditNews({setNew, close, category, inData}) {
                             ? 
                             (
                                 <div className="multipleSelect">
+
+                                    <div className="closeTagsArea flex">
+                                        <div className="topicPin"> Select Tags </div>
+                                        <div className="closeIn" onClick={ () => setaddtagModal(!addtagModal)} ><Xmark/></div>
+                                    </div>
+
                                     <div className="search"> <input type="text" placeholder='Search tags...' onChange={(e)=>setSearch(e.target.value)} value={search} /> </div>
                                     
                                     <div className="checkboxes">
 
                                         {
-                                            queryResults.length ? queryResults.map( data => <Services__category key = {data._id} name = {data.name} tags = {addTag} tagsZone = {categories} /> ) : <p>Nothing Found</p>
+                                            queryResults.length ? queryResults.map( data => <Services__category key = {data._id} name = {data.name} tags = {addTag} tagsZone = {tags} /> ) : <p>Nothing Found</p>
                                         }
 
                                     </div>
@@ -368,14 +345,39 @@ export default function EditNews({setNew, close, category, inData}) {
 
                     </div>
 
-                    <div className="ssbmit__button sumUp" onClick={handleSubmit} > Update News <ArrowRight color='#fff'/> </div>
+                    <div className="ssbmit__button sumUp" onClick={handleSubmit} > Create Event <ArrowRight color='#fff'/> </div>
 
 
                 </div>
 
-                <div className="editor edit_news">
+                {/* <div className='eventZoneContent'>
 
-                    <LASGEditor value = {data.content} readOnly = {false} submittableText = {getText} />
+                    <div className="form__holder">
+
+                        <label> Event Image </label>
+
+                        <div className="news__image" onClick={ () => handleClick() } >
+
+                            <img src={photo} alt="" />
+                            <div className="tapTo">Tap to edit</div>
+
+                        </div>
+                        
+                        <input type="file" id='file' accept="image/*" name = 'file' onChange={(e) => handleFile(e) } hidden />
+
+                    </div>
+
+                    <div className="editor edit_news ER">
+
+                        <LASGEditor value = {'<p>Start typing your text here...</p>'} readOnly = {false} submittableText = {getText} />
+
+                    </div>
+
+                </div> */}
+
+                <div className="editor edit_news ER">
+
+                    <LASGEditor value = {'<p>Start typing your text here...</p>'} readOnly = {false} submittableText = {getText} />
 
                 </div>
 
