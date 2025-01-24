@@ -49,7 +49,7 @@ export default function Admin() {
         
         </a>
 
-        <a href='/events' className="link events"> 
+        <a href='/events/all/1' className="link events"> 
 
         <div className="icon"><Tv/></div> 
         <div className="text"> Events </div>
