@@ -58,7 +58,7 @@ export default function ExecutileTableData({data, setNew, handleEdit}) {
 
             <div className="mda__name">
                 <div className='main'>{data.fullname}</div>
-                <div className='sub'> Hon. Commissioner for Agriculture and Food Systems </div>
+                <div className='sub'> {data.position} </div>
             </div>
 
         </div>

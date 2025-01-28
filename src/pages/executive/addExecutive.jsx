@@ -160,7 +160,7 @@ export default function AddCouncilMember({setNew, close}) {
 
                     <div className="form__holder">
 
-                        <label> Member Phone Number </label>
+                        <label> Member Position / Order </label>
                         <input type="tel" name = 'phone' value = {data.phone} placeholder='Enter here...' onChange={(handleChange)} />
 
                     </div>
