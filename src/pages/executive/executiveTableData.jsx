@@ -9,6 +9,7 @@ import { deleteMember } from '../../api/executives.req';
 export default function ExecutileTableData({data, setNew, handleEdit}) {
 
   const [showMore, setShowMore] = useState(false);
+  const [role, setrole] = useState("");
   
   document.addEventListener('click', e => {
 
@@ -44,6 +45,31 @@ export default function ExecutileTableData({data, setNew, handleEdit}) {
    
   }
 
+  useEffect(() => {
+    
+    if (Number(data.phone) === 1) setrole('governor');
+    if (Number(data.phone) === 2) setrole('deputy_governor');
+    if (Number(data.phone) === 3) setrole('ssg');
+    if (Number(data.phone) === 4) setrole('hos');
+    if (Number(data.phone) === 5) setrole('cos');
+    if (Number(data.phone) === 6) setrole('dcos');
+
+  }, [data]);
+
+  const handleProfileView = () => {
+
+    if (role !== "") {
+
+      window.open(`https://lagosstate.gov.ng/government/elected_officials/${role}/view`)
+    
+    } else {
+
+      window.open(`https://lagosstate.gov.ng/government/elected_officials/view/${data.fullname}`)
+
+    }
+
+  }
+
   return (
     
     <div className="table__data body__area">
@@ -69,7 +95,7 @@ export default function ExecutileTableData({data, setNew, handleEdit}) {
           
         </div>
 
-        <div className="table__heading_title date-f"> setongee@gmail.com </div>
+        <div className="table__heading_title date-f"> {data.email} </div>
 
         <div className="table__heading_title date-f"> { formatDate(data.updatedAt) }</div>
         
@@ -84,7 +110,7 @@ export default function ExecutileTableData({data, setNew, handleEdit}) {
 
               <div className="more" id = 'more'>
 
-                <p onClick={() => window.open(data.url) }> Visit Member URL </p>
+                <p onClick={() => handleProfileView() }> Visit Member URL </p>
                 <p onClick={() => handleEdit(data._id)}>Edit Member Details</p>
                 <p className='del' onClick={handleDelete}>Delete Member</p>
 

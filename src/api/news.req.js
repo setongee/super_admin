@@ -17,7 +17,7 @@ export const addNews = async (data) => {
 
 export const getAllNews = async (topic, page) => {
 
-    let pageInt = Number(page) - 1
+    let pageInt = Number(page) - 1;
 
     const response = await axios.get(`${base_url}/get/all/${topic}/${pageInt < 0 ? 0 : pageInt}`);
     
