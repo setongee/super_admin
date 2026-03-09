@@ -7,7 +7,7 @@ import LASGEditor from '../../components/textEditor/lasg_custom_editor';
 import DateSelector from '../../components/date/dataSelector';
 import { addNews } from '../../api/news.req';
 import { formatCategoryName } from '../../middleware/middleware';
-import { getAllMdas } from '../../api/mda.req';
+import { getAllMdas, getMdasDirectory } from '../../api/mda.req';
 
 export default function AddNews({setNew, close, category}) {
 
@@ -61,8 +61,11 @@ export default function AddNews({setNew, close, category}) {
 
           }
 
-          getAllMdas()
-          .then(response => setMdas(response) );
+        //   getAllMdas()
+        //   .then(response => setMdas(response) );
+
+          getMdasDirectory()
+          .then(response => setMdas(response.data) );
 
     }, [search]);
 
@@ -281,7 +284,7 @@ export default function AddNews({setNew, close, category}) {
                             {
                                 mdas.map( (res, index) => {
 
-                                    return <option value={res.name}>{res.name}</option>
+                                    return <option value={res.name}>{res.fullname}</option>
 
                                 } )
                             }
